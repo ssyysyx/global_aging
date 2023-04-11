@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        @-webkit-keyframes blink {
+
+            from,
+            to {
+                color: transparent;
+            }
+
+            50% {
+                color: black;
+            }
+        }
+
+        @keyframes blink {
+
+            from,
+            to {
+                color: transparent;
+            }
+
+            50% {
+                color: black;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        #container {
+            min-height: 90vh;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: center;
+            -webkit-justify-content: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+
+        #teletype {
+            font-family: monospace;
+            font-size: 2rem;
+            display: block;
+            width: 33rem;
+        }
+
+        #teletype span {
+            -webkit-animation: blink 1s step-end infinite;
+            animation: blink 1s step-end infinite;
+        }
+
+        form {
+            background: #333;
+            padding: 1rem;
+            text-align: center;
+            font-size: 1.2rem;
+            -webkit-transition: 1s;
+            transition: 1s;
+        }
+
+        #typer {
+            padding: .4rem;
+            font-size: inherit;
+            width: 36rem;
+        }
+
+        input[type="submit"] {
+            font-size: inherit;
+            display: inline-block;
+            padding: .3rem;
+        }
+
+        .hideaway {
+            -webkit-transform: translateY(5vw);
+            transform: translateY(5vw);
+        }
+    </style>
+</head>
+
+<body>
+    <script type="text/javascript" src="https://wow.techbrood.com/libs/jquery/jquery-2.1.1.min.js"></script>
+    <script src="https://wow.techbrood.com/libs/jquery/jquery-1.11.1.min.js"></script>
+    <div id="container">
+        <span id="teletype" hidden></span>
+    </div>
+    <form class="hideaway">
+        <input type="text" id="typer" value="Somewhere in the South Pacific">
+        <input type="submit" value="Type It!">
+    </form>
+    <script>
+        const teletype = document.getElementById("teletype"),
+            typer = document.getElementById("typer"),
+            formEntry = document.getElementsByTagName("form")[0],
+            cursor = "<span>|</span>";
+
+        formEntry.addEventListener("submit", function (e) {
+            e.preventDefault();
+            typeIt();
+        });
+
+        function typeIt() {
+            let counter = 0,
+                typedLen = typer.value.length;
+            teletype.innerHTML = cursor;
+            teletype.removeAttribute("hidden");
+            var i = setInterval(function () {
+                teletype.innerHTML = typer.value.substr(0, counter) + cursor;
+                counter++;
+                if (counter === typedLen + 1) {
+                    formEntry.classList.toggle("hideaway");
+                    clearInterval(i);
+                }
+            }, 100);
+        }
+
+        typeIt();
+    </script>
+
+</body>
+
+</html>

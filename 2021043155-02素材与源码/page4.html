@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head> 
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="eecharts.min.js"></script>
+    <link rel="stylesheet" href="page1.css">
+    <link rel="stylesheet" href="iconfont.css">
+    <style>
+        #boxx {
+            overflow: hidden;
+            position: absolute;
+            border-radius: 5px 5px 5px 5px;
+            border: 5px solid rgb(255, 255, 255);
+            width: 1000px;
+            height: 550px;
+            margin: 50px auto;
+            left: 220px;
+        }
+
+        .wenben {
+            overflow: hidden;
+            position: absolute;
+            border-radius: 5px 5px 5px 5px;
+            border: 5px solid rgb(255, 255, 255);
+            width: 1000px;
+            height: 550px;
+            background: url('beibei.png');
+            margin: 50px auto;
+            visibility: hidden;
+            left: 220px;
+            z-index: 300;
+        }
+
+        .close {
+            position: relative;
+            background-image: url('close.png');
+            width: 50px;
+            height: 50px;
+            float: right;
+            border: 0;
+            margin-top: 5px;
+            margin-right: 5px;
+            z-index: 301;
+        }
+    </style>
+
+</head>
+
+<body background="beijing.png">
+    <span style="position:absolute; background-image: url('tiaotiao.png'); width:60px; height:3px; margin-top: 40px; margin-left: 955px;"></span>
+    <div class="nav_box" style="font-family:myFont">
+        <div :class="[isActive>=1?'in in_on':'in in_off']" @click="turn_1" style="padding-left:12px; z-index: 303;">老年人口情况
+        </div>
+        <div :class="[isActive>=2?'in in_on':'in in_off']" @click="turn_2" style="padding-left:30px; z-index: 302;">分析库
+            <div :class="[isActive>=1?'in_cot in_on':'in_cot in_off']"></div>
+        </div>
+        <div :class="[isActive>=3?'in in_on':'in in_off']" @click="turn_3" style="padding-left:40px;z-index: 300;">时空动态对比
+            <div :class="[isActive>=2?'in_cot in_on':'in_cot in_off']"></div>
+        </div>
+        <div :class="[isActive>=4?'in in_on':'in in_off']" @click="turn_4" style="padding-left:30px;">人口大事纪
+            <div :class="[isActive>=3?'in_cot in_on':'in_cot in_off']"></div>
+        </div>
+        <div :class="[isActive>=5?'in in_on':'in in_off']" @click="turn_5" style="padding-left:30px;">应对措施
+            <div :class="[isActive>=4?'in_cot in_on':'in_cot in_off']"></div>
+        </div>
+        <div :class="[isActive>=6?'in in_on':'in in_off']" @click="turn_6" style="padding-left:18px;">舆情舆论
+            <div :class="[isActive>=5?'in_cot in_on':'in_cot in_off']"></div>
+        </div>
+    </div>
+
+    <div id="wenben1" class="wenben">
+        <span
+            style="margin-left:520px; margin-top:20px; width:150px; height:50px; position:absolute; background-image: url('fangdajing.png');"></span>
+        <span
+            style="margin-left:20px; margin-top:18px; width:370px; height:46px; position:absolute; background-image: url('yingdui.png');"></span>
+        <button id="close1" class="close"></button>
+        <div id="showImageId1" style="margin-left: 55%;margin-top: 65px;position: relative;">
+            <!-- <span id='my_canvas' style="position:absolute; width:300px; height:300px;"></span> -->
+        </div>
+
+        <div
+            style="position:relative; width:390px; height:150px; margin-top:100px; margin-left: 70px; font-size: 18px; color: azure;">
+            <h2>全面二孩政策</h2>
+            <p><span style="font-size: 24px;font-weight: bold;">实施日期：</span>2016年1月1日</p>
+            <p><span style="font-size: 24px;font-weight: bold;">内容：</span>全面二孩是指所有夫妇，无论城乡、区域、民族，都可以生育两个子女的政策。</p>
+            <p><span style="font-size: 24px;font-weight: bold;">宗旨：</span>通过提高出生率缓解人口老龄化。</p>
+            <p><span
+                    style="font-size: 24px;font-weight: bold;">效果：</span>全面二孩政策在一定程度上能够带动人口与劳动力数量的增长。然而不超过2030年，我国的人口很可能开始减少。全面二孩政策仍远不能缓解我国人口老龄化的问题。
+            </p>
+            <!-- 自2016年1月1日起，我国所有夫妇均可生育两个孩子，旨在通过提高出生率缓解人口老龄化。我们通过数值模拟，对全面二孩政策能否减轻我国老龄化进行了推断。图11
+            的上侧图显示了全面二孩政策与独生子女政策两种情形下我国人口变化的对比情况。该图中假设了全面二孩政策对女性总和生育率的影响分别为0.3、0.5 和 0.7；其中 0.3
+            与文献中的估计值接近。模拟显示全面二孩政策在一定程度上能够带动人口与劳动力数量的增长。然而不超过2030 年，我国的人口很可能开始减少。图11的下侧图表模拟了在全面二孩政策与独
+            生子女政策两种情形下我国65岁及以上人口所占比重的变化情况。 我们仍然假设全面二孩政策对女性总和生育率分别为0.3、0.5 和 0.7。 结果显示全面二孩政策仍远不能缓解我国人口老龄化的问题。 -->
+        </div>
+        <!-- <div id="my_canvas" style="position:absolute; width:500px; height:500px; left:100px; top:50px; font-size: 16; color: azure; "> -->
+        <!-- <span id='my_canvas' style="position:absolute; width:300px; height:300px;">aaa</span> -->
+        <!-- zhelishi词云 -->
+    </div>
+
+    <div id="wenben2" class="wenben">
+        <span
+            style="margin-left:520px; margin-top:20px; width:150px; height:50px; position:absolute; background-image: url('fangdajing.png');"></span>
+        <span
+            style="margin-left:20px; margin-top:18px; width:370px; height:46px; position:absolute; background-image: url('yingdui.png');"></span>
+        <button id="close2" class="close"></button>
+        <div id="showImageId2" style="margin-left: 55%;margin-top: 65px;position: relative;">
+            <!-- <span id='my_canvas' style="position:absolute; width:300px; height:300px;"></span> -->
+        </div>
+
+        <div
+            style="position:relative; width:400px; height:150px; margin-top:85px; margin-left: 45px; font-size: 18px; color: azure;">
+            <h2>取消生育限制与生育鼓励政策</h2>
+            <p style="font-size: 16px;">
+                比起全面二孩政策，彻底取消生育限制能够更好地应对我国人口老龄化，但仍不足以根本缓解这个问题。基于日本、新加坡、韩国、我国台湾地区等与国内文化背景相似的国家或地区生育鼓励政策的实施结果，未来生育鼓励政策在我国的成效并不乐观。日本和新加坡的生育鼓励政策已经实施二十年多年，但对人口出生率的影响很小。生育鼓励政策在韩国和我国台湾地区实施的时间并不长，收效还有待验证，但到目前为止相关政策对提升出生率的成效仍不明显。
+            </p>
+            <p style="font-size: 16px;">
+                如果生育鼓励政策无法有效提升我国人口出生率，而开放国际移民等一些小国常用的方法对我国这样的人口大国亦不太适用，则我国人口将不可避免地日趋老龄化。若产业结构没有得到适当的调整，我国劳动力市场很可能将面临劳动力短缺的难题。政府应该吸取以上四个国家或地区的教训，尽快就人口老龄化问题做出进一步反应。如果人口出生率长期保持在一个较低的水平，届时再采取措施将为时已晚。
+            </p>
+
+        </div>
+    </div>
+
+    <div id="wenben3" class="wenben">
+        <span
+            style="margin-left:520px; margin-top:20px; width:150px; height:50px; position:absolute; background-image: url('fangdajing.png');"></span>
+        <span
+            style="margin-left:20px; margin-top:18px; width:370px; height:46px; position:absolute; background-image: url('yingdui.png');"></span>
+        <button id="close3" class="close"></button>
+        <div id="showImageId3" style="margin-left: 55%;margin-top: 65px;position: relative;">
+            <!-- <span id='my_canvas' style="position:absolute; width:300px; height:300px;"></span> -->
+        </div>
+
+        <div
+            style="position:relative; width:400px; height:150px; margin-top:85px; margin-left: 45px; font-size: 18px; color: azure;">
+            <h2>延长第一类人口红利的措施</h2>
+            <p style="font-size: 16px;">
+                第一类人口红利：由于出生率低导致在一定时期内生产性人口（劳动人口）增长的速度高于消费性人口（儿童与老人）的增长速度。
+            </p>
+            <p style="font-size: 16px;">
+                1、推行灵活退休年龄制度：由于国人预期寿命的增加，延迟退休年龄在客观上成为可能，政府需出台相应的政策，改革僵化的退休制度，代之以灵活退休年龄制度，把退休的选择权交到劳动者手中。
+                2、纠正教育错配和过度教育，重视职业教育：虽然我国国民的教育水平大大提高，但高教育水平者的劳动供给和劳动力市场需求难言匹配，存在着教育资源错配和过度教育的情况。
+                3、增加女性和老龄人口的劳动参与率：国家应该从公共政策角度，为女性提供更全面的子女养教服务，使其从家庭责任中解放出来，有更多时间和精力参与到劳动力市场。
+                4、改革户籍制度、充分利用农村人力资源：大部分农名工的有效的劳动时间由于户籍制度而受到了很大限制，其潜能也难以充分发挥。
+            </p>
+            </div>
+        <!-- <div id="my_canvas" style="position:absolute; width:500px; height:500px; left:100px; top:50px; font-size: 16; color: azure; "> -->
+        <!-- <span id='my_canvas' style="position:absolute; width:300px; height:300px;">aaa</span> -->
+        <!-- zhelishi词云 -->
+    </div>
+
+    <div id="wenben4" class="wenben">
+        <span
+            style="margin-left:520px; margin-top:20px; width:150px; height:50px; position:absolute; background-image: url('fangdajing.png');"></span>
+        <span
+            style="margin-left:20px; margin-top:18px; width:370px; height:46px; position:absolute; background-image: url('yingdui.png');"></span>
+        <button id="close4" class="close"></button>
+        <div id="showImageId4" style="margin-left: 55%;margin-top: 65px;position: relative;">
+        </div>
+        <div
+            style="position:relative; width:400px; height:150px; margin-top:85px; margin-left: 45px; font-size: 18px; color: azure;">
+            <h2>延长第二类人口红利的措施</h2>
+            <p style="font-size: 16px;">
+                第二类人口红利：指成年人在工作的过程中积累了资本和财富，到老年时开始消费。
+            </p>
+            <p style="font-size: 16px;">
+                1、推行灵活退休年龄制度：由于国人预期寿命的增加，延迟退休年龄在客观上成为可能，政府需出台相应的政策，改革僵化的退休制度，代之以灵活退休年龄制度，把退休的选择权交到劳动者手中。
+                我国现在的养老压力几乎都落到了第一支柱上，其直接后果是现行养老制度不堪重负，同时造成对个人储蓄的挤出。因此我国应该大力发展第二支柱和第三支柱。
+                2、纠正教育错配和过度教育，重视职业教育：虽然我国国民的教育水平大大提高，但高教育水平者的劳动供给和劳动力市场需求难言匹配，存在着教育资源错配和过度教育的情况。
+                我国户籍制度造成的城乡分割，在一定程度上使得第二类人口红利在农村难以实现。农村居民收入低、储蓄低，难以依靠家庭养老。稳步推进户籍制度改革，消除城乡二元结构有助于延长第二类人口红利。
+            </p>
+            </div>
+    </div>
+
+    <div id="wenben5" class="wenben">
+        <span
+            style="margin-left:520px; margin-top:20px; width:150px; height:50px; position:absolute; background-image: url('fangdajing.png');"></span>
+        <span
+            style="margin-left:20px; margin-top:18px; width:370px; height:46px; position:absolute; background-image: url('yingdui.png');"></span>
+        <button id="close5" class="close"></button>
+        <div id="showImageId5" style="margin-left: 55%;margin-top: 65px;position: relative;">
+        </div>
+        <div
+            style="position:relative; width:400px; height:150px; margin-top:85px; margin-left: 45px; font-size: 18px; color: azure;">
+            <h2>提高养老金统筹层次</h2>
+            <!-- <p><span style="font-size: 24px;font-weight: bold;">实施日期：</span>2016年1月1日</p>
+            <p><span style="font-size: 24px;font-weight: bold;">内容：</span>全面二孩是指所有夫妇，无论城乡、区域、民族，都可以生育两个子女的政策。</p>
+            <p><span style="font-size: 24px;font-weight: bold;">宗旨：</span>通过提高出生率缓解人口老龄化。</p>
+            <p><span
+                    style="font-size: 24px;font-weight: bold;">效果：</span>全面二孩政策在一定程度上能够带动人口与劳动力数量的增长。然而不超过2030年，我国的人口很可能开始减少。全面二孩政策仍远不能缓解我国人口老龄化的问题。
+            </p> -->
+            </div>
+    </div>
+
+    <div id="wenben6" class="wenben">
+        <span
+            style="margin-left:520px; margin-top:20px; width:150px; height:50px; position:absolute; background-image: url('fangdajing.png');"></span>
+        <span
+            style="margin-left:20px; margin-top:18px; width:370px; height:46px; position:absolute; background-image: url('yingdui.png');"></span>
+        <button id="close6" class="close"></button>
+        <div id="showImageId6" style="margin-left: 55%;margin-top: 65px;position: relative;">
+        </div>
+        <div
+            style="position:relative; width:400px; height:150px; margin-top:85px; margin-left: 45px; font-size: 18px; color: azure;">
+            <h2>将养老金进行省际调剂</h2>
+            </div>
+    </div>
+
+    <div id="wenben7" class="wenben">
+        <span
+            style="margin-left:520px; margin-top:20px; width:150px; height:50px; position:absolute; background-image: url('fangdajing.png');"></span>
+        <span
+            style="margin-left:20px; margin-top:18px; width:370px; height:46px; position:absolute; background-image: url('yingdui.png');"></span>
+        <button id="close7" class="close"></button>
+        <div id="showImageId7" style="margin-left: 55%;margin-top: 65px;position: relative;">
+        </div>
+        <div
+            style="position:relative; width:400px; height:150px; margin-top:85px; margin-left: 45px; font-size: 18px; color: azure;">
+            <h2>促进老年人的身心健康</h2>
+            <p style="font-size: 16px;">
+                既然老龄化的趋势不可逆转，公共政策就应该关注如何促进老年人的身心健康，如何改善他们的生活质量，以及如何完善健康服务的效率进而降低医疗成本。
+            </p>
+            </div>
+    </div>
+
+    <div id="wenben8" class="wenben">
+        <span
+            style="margin-left:520px; margin-top:20px; width:150px; height:50px; position:absolute; background-image: url('fangdajing.png');"></span>
+        <span
+            style="margin-left:20px; margin-top:18px; width:370px; height:46px; position:absolute; background-image: url('yingdui.png');"></span>
+        <button id="close8" class="close"></button>
+        <div id="showImageId8" style="margin-left: 55%;margin-top: 65px;position: relative;">
+        </div>
+        <div
+            style="position:relative; width:400px; height:150px; margin-top:85px; margin-left: 45px; font-size: 18px; color: azure;">
+            <h2>降低医疗成本</h2>
+            <p style="font-size: 16px;">
+                第一类人口红利：由于出生率低导致在一定时期内生产性人口（劳动人口）增长的速度高于消费性人口（儿童与老人）的增长速度。
+            </p>
+            <p style="font-size: 16px;">
+                1、推行灵活退休年龄制度：由于国人预期寿命的增加，延迟退休年龄在客观上成为可能，政府需出台相应的政策，改革僵化的退休制度，代之以灵活退休年龄制度，把退休的选择权交到劳动者手中。
+                2、纠正教育错配和过度教育，重视职业教育：虽然我国国民的教育水平大大提高，但高教育水平者的劳动供给和劳动力市场需求难言匹配，存在着教育资源错配和过度教育的情况。
+                3、增加女性和老龄人口的劳动参与率：国家应该从公共政策角度，为女性提供更全面的子女养教服务，使其从家庭责任中解放出来，有更多时间和精力参与到劳动力市场。
+                4、改革户籍制度、充分利用农村人力资源：大部分农名工的有效的劳动时间由于户籍制度而受到了很大限制，其潜能也难以充分发挥。
+            </p>
+            </div>
+    </div>
+
+    <div id="wenben9" class="wenben">
+        <span
+            style="margin-left:520px; margin-top:20px; width:150px; height:50px; position:absolute; background-image: url('fangdajing.png');"></span>
+        <span
+            style="margin-left:20px; margin-top:18px; width:370px; height:46px; position:absolute; background-image: url('yingdui.png');"></span>
+        <button id="close9" class="close"></button>
+        <div id="showImageId9" style="margin-left: 55%;margin-top: 65px;position: relative;">
+        </div>
+        <div
+            style="position:relative; width:400px; height:150px; margin-top:85px; margin-left: 45px; font-size: 18px; color: azure;">
+            <h2>市场社会资源完善养老体系</h2>
+            <p style="font-size: 16px;">
+                第一类人口红利：由于出生率低导致在一定时期内生产性人口（劳动人口）增长的速度高于消费性人口（儿童与老人）的增长速度。
+            </p>
+            <p style="font-size: 16px;">
+                1、推行灵活退休年龄制度：由于国人预期寿命的增加，延迟退休年龄在客观上成为可能，政府需出台相应的政策，改革僵化的退休制度，代之以灵活退休年龄制度，把退休的选择权交到劳动者手中。
+                2、纠正教育错配和过度教育，重视职业教育：虽然我国国民的教育水平大大提高，但高教育水平者的劳动供给和劳动力市场需求难言匹配，存在着教育资源错配和过度教育的情况。
+                3、增加女性和老龄人口的劳动参与率：国家应该从公共政策角度，为女性提供更全面的子女养教服务，使其从家庭责任中解放出来，有更多时间和精力参与到劳动力市场。
+                4、改革户籍制度、充分利用农村人力资源：大部分农名工的有效的劳动时间由于户籍制度而受到了很大限制，其潜能也难以充分发挥。
+            </p>
+            </div>
+    </div>
+
+    <div id="wenben10" class="wenben">
+        <span
+            style="margin-left:520px; margin-top:20px; width:150px; height:50px; position:absolute; background-image: url('fangdajing.png');"></span>
+        <span
+            style="margin-left:20px; margin-top:18px; width:370px; height:46px; position:absolute; background-image: url('yingdui.png');"></span>
+        <button id="close10" class="close"></button>
+        <div id="showImageId10" style="margin-left: 55%;margin-top: 65px;position: relative;">
+        </div>
+        <div
+            style="position:relative; width:400px; height:150px; margin-top:85px; margin-left: 45px; font-size: 18px; color: azure;">
+            <h2>社区基础公共服务体系</h2>
+            <p style="font-size: 16px;">
+                第一类人口红利：由于出生率低导致在一定时期内生产性人口（劳动人口）增长的速度高于消费性人口（儿童与老人）的增长速度。
+            </p>
+            <p style="font-size: 16px;">
+                1、推行灵活退休年龄制度：由于国人预期寿命的增加，延迟退休年龄在客观上成为可能，政府需出台相应的政策，改革僵化的退休制度，代之以灵活退休年龄制度，把退休的选择权交到劳动者手中。
+                2、纠正教育错配和过度教育，重视职业教育：虽然我国国民的教育水平大大提高，但高教育水平者的劳动供给和劳动力市场需求难言匹配，存在着教育资源错配和过度教育的情况。
+                3、增加女性和老龄人口的劳动参与率：国家应该从公共政策角度，为女性提供更全面的子女养教服务，使其从家庭责任中解放出来，有更多时间和精力参与到劳动力市场。
+                4、改革户籍制度、充分利用农村人力资源：大部分农名工的有效的劳动时间由于户籍制度而受到了很大限制，其潜能也难以充分发挥。
+            </p>
+            </div>
+    </div>
+
+
+    <script>
+        var btn = document.getElementById("close1");
+        btn.onclick = function () {
+            document.getElementById("wenben1").style.visibility = "hidden";
+        }
+        var btn = document.getElementById("close2");
+        btn.onclick = function () {
+            document.getElementById("wenben2").style.visibility = "hidden";
+        }
+        var btn = document.getElementById("close3");
+        btn.onclick = function () {
+            document.getElementById("wenben3").style.visibility = "hidden";
+        }
+        var btn = document.getElementById("close4");
+        btn.onclick = function () {
+            document.getElementById("wenben4").style.visibility = "hidden";
+        }
+        var btn = document.getElementById("close5");
+        btn.onclick = function () {
+            document.getElementById("wenben5").style.visibility = "hidden";
+        }
+        var btn = document.getElementById("close6");
+        btn.onclick = function () {
+            document.getElementById("wenben6").style.visibility = "hidden";
+        }
+        var btn = document.getElementById("close7");
+        btn.onclick = function () {
+            document.getElementById("wenben7").style.visibility = "hidden";
+        }
+        var btn = document.getElementById("close8");
+        btn.onclick = function () {
+            document.getElementById("wenben8").style.visibility = "hidden";
+        }
+        var btn = document.getElementById("close9");
+        btn.onclick = function () {
+            document.getElementById("wenben9").style.visibility = "hidden";
+        }
+        var btn = document.getElementById("close10");
+        btn.onclick = function () {
+            document.getElementById("wenben10").style.visibility = "hidden";
+        }
+    </script>
+
+
+    <script src="wordcloud2.js"></script>
+
+    <!-- 动态词云内容编辑 -->
+    <script>
+        var options1 = eval({
+            "list": [
+                ['全面二孩政策', 9],
+                ['所有夫妇', 8],
+                ['提高出生率', 7],
+                ['缓解', 7],
+                ['人口老龄化', 4],
+                ['人口', 5],
+                ['生育率', 4],
+                ['一定程度', 7],
+                ['劳动力', 5],
+                ['增长', 5],
+                ['2030年', 6],
+                ['开始减少', 4],
+                ['女性总和', 3],
+                ['城乡', 4],
+                ['区域', 3],
+                ['民族', 5],
+                ['2016年1月', 6],
+                ['两个子女', 8],
+                ['山东', 4],
+                ['最敢生', 5],
+                ['低生育', 4],
+                ['难以逆转', 3],
+                ['广东', 3],
+                ['河南', 3],
+                ['河北', 3],
+            ],
+            "gridSize": 6, // size of the grid in pixels
+            "weightFactor": 6, // number to multiply for size of each word in the list
+            "fontWeight": 'normal', // 'normal', 'bold' or a callback
+            "fontFamily": 'Times, serif', // font to use
+            "color": 'random-light', // 'random-dark' or 'random-light'
+
+            "backgroundColor": '#FFFFFF', // the color of canvas
+            "rotateRatio": 1 // probability for the word to rotate. 1 means always rotate
+        });
+
+        var options2 = eval({
+            "list": [
+                ['取消生育限制', 9],
+                ['生育鼓励', 9],
+                ['日本', 5],
+                ['新加坡', 5],
+                ['韩国', 5],
+                ['台湾', 5],
+                ['与国内文化背景相似', 4],
+                ['成效并不乐观', 6],
+                ['日本已实施二十多年', 2],
+                ['影响很小', 5],
+                ['新加坡已实施二十多年', 6],
+                ['韩国有待验证', 4],
+                ['台湾有待验证', 3],
+                ['国际移民', 7],
+                ['产业结构调整', 5],
+                ['吸取教训', 5],
+                ['小国方法不适用', 6],
+                ['劳动力短缺问题', 4],
+                // ['山东', 4],
+                // ['最敢生', 5],
+                // ['低生育', 4],
+                // ['难以逆转', 3],
+                // ['广东', 3],
+                // ['河南', 3],
+                // ['河北', 3],
+            ],
+            "gridSize": 6, // size of the grid in pixels
+            "weightFactor": 6, // number to multiply for size of each word in the list
+            "fontWeight": 'normal', // 'normal', 'bold' or a callback
+            "fontFamily": 'Times, serif', // font to use
+            "color": 'random-light', // 'random-dark' or 'random-light'
+
+            "backgroundColor": '#FFFFFF', // the color of canvas
+            "rotateRatio": 1 // probability for the word to rotate. 1 means always rotate
+        });
+
+        var options3 = eval({
+            "list": [
+                ['第一类人口红利', 6],
+                ['灵活退休年龄制度', 5],
+                ['取消强制退休制度', 5],
+                ['纠正教育错配', 5],
+                ['重视职业教育', 5],
+                ['提高女性劳动参与', 4],
+                ['提高老龄劳动参与', 4],
+                ['推进户籍制度改革', 5],
+                ['农村人力资源优势', 5],
+                ['生产性人口', 5],
+                ['消费性人口', 5],
+                ['志愿延长劳动年限', 4],
+                ['纠正过度教育', 4],
+                ['子女教养服务', 4],
+                ['产业升级', 5],
+                // ['吸取教训', 5],
+                // ['小国方法不适用', 6],
+                // ['劳动力短缺问题', 4],
+                // ['山东', 4],
+                // ['最敢生', 5],
+                // ['低生育', 4],
+                // ['难以逆转', 3],
+                // ['广东', 3],
+                // ['河南', 3],
+                // ['河北', 3],
+            ],
+            "gridSize": 6, // size of the grid in pixels
+            "weightFactor": 6, // number to multiply for size of each word in the list
+            "fontWeight": 'normal', // 'normal', 'bold' or a callback
+            "fontFamily": 'Times, serif', // font to use
+            "color": 'random-light', // 'random-dark' or 'random-light'
+
+            "backgroundColor": '#FFFFFF', // the color of canvas
+            "rotateRatio": 1 // probability for the word to rotate. 1 means always rotate
+        });
+
+        var options4 = eval({
+            "list": [
+                ['延长第二类人口红利', 7],
+                ['改革养老金制度', 6],
+                ['发展养老金第二支柱', 5],
+                ['发展养老金第三支柱', 5],
+                ['基础养老金', 5],
+                ['国家负责', 5],
+                ['企业年金', 5],
+                ['事业单位职业年金', 4],
+                ['个人积蓄', 5],
+                ['现行制度不堪重负', 4],
+                ['户籍制度改革', 6],
+                ['消除城乡二元结构', 5],
+                ['城乡分割', 3],
+                ['农村居民储蓄低', 4],
+                ['老年开始消费', 4],
+                ['更高人均资本财富', 3],
+                ['劳动生产率', 4],
+                ['积累资本财富', 4],
+                // ['山东', 4],
+                // ['最敢生', 5],
+                // ['低生育', 4],
+                // ['难以逆转', 3],
+                // ['广东', 3],
+                // ['河南', 3],
+                // ['河北', 3],
+            ],
+            "gridSize": 6, // size of the grid in pixels
+            "weightFactor": 6, // number to multiply for size of each word in the list
+            "fontWeight": 'normal', // 'normal', 'bold' or a callback
+            "fontFamily": 'Times, serif', // font to use
+            "color": 'random-light', // 'random-dark' or 'random-light'
+
+            "backgroundColor": '#FFFFFF', // the color of canvas
+            "rotateRatio": 1 // probability for the word to rotate. 1 means always rotate
+        });
+
+        var options5 = eval({
+            "list": [
+                ['取消生育限制', 9],
+                ['生育鼓励', 9],
+                ['日本', 5],
+                ['新加坡', 5],
+                ['韩国', 5],
+                ['台湾', 5],
+                ['与国内文化背景相似', 4],
+                ['成效并不乐观', 6],
+                ['日本已实施二十多年', 2],
+                ['影响很小', 5],
+                ['新加坡已实施二十多年', 6],
+                ['韩国有待验证', 4],
+                ['台湾有待验证', 3],
+                ['国际移民', 7],
+                ['产业结构调整', 5],
+                ['吸取教训', 5],
+                ['小国方法不适用', 6],
+                ['劳动力短缺问题', 4],
+                // ['山东', 4],
+                // ['最敢生', 5],
+                // ['低生育', 4],
+                // ['难以逆转', 3],
+                // ['广东', 3],
+                // ['河南', 3],
+                // ['河北', 3],
+            ],
+            "gridSize": 6, // size of the grid in pixels
+            "weightFactor": 6, // number to multiply for size of each word in the list
+            "fontWeight": 'normal', // 'normal', 'bold' or a callback
+            "fontFamily": 'Times, serif', // font to use
+            "color": 'random-light', // 'random-dark' or 'random-light'
+
+            "backgroundColor": '#FFFFFF', // the color of canvas
+            "rotateRatio": 1 // probability for the word to rotate. 1 means always rotate
+        });
+
+        var options6 = eval({
+            "list": [
+                ['取消生育限制', 9],
+                ['生育鼓励', 9],
+                ['日本', 5],
+                ['新加坡', 5],
+                ['韩国', 5],
+                ['台湾', 5],
+                ['与国内文化背景相似', 4],
+                ['成效并不乐观', 6],
+                ['日本已实施二十多年', 2],
+                ['影响很小', 5],
+                ['新加坡已实施二十多年', 6],
+                ['韩国有待验证', 4],
+                ['台湾有待验证', 3],
+                ['国际移民', 7],
+                ['产业结构调整', 5],
+                ['吸取教训', 5],
+                ['小国方法不适用', 6],
+                ['劳动力短缺问题', 4],
+                // ['山东', 4],
+                // ['最敢生', 5],
+                // ['低生育', 4],
+                // ['难以逆转', 3],
+                // ['广东', 3],
+                // ['河南', 3],
+                // ['河北', 3],
+            ],
+            "gridSize": 6, // size of the grid in pixels
+            "weightFactor": 6, // number to multiply for size of each word in the list
+            "fontWeight": 'normal', // 'normal', 'bold' or a callback
+            "fontFamily": 'Times, serif', // font to use
+            "color": 'random-light', // 'random-dark' or 'random-light'
+
+            "backgroundColor": '#FFFFFF', // the color of canvas
+            "rotateRatio": 1 // probability for the word to rotate. 1 means always rotate
+        });
+
+        var options7 = eval({
+            "list": [
+                ['取消生育限制', 9],
+                ['生育鼓励', 9],
+                ['日本', 5],
+                ['新加坡', 5],
+                ['韩国', 5],
+                ['台湾', 5],
+                ['与国内文化背景相似', 4],
+                ['成效并不乐观', 6],
+                ['日本已实施二十多年', 2],
+                ['影响很小', 5],
+                ['新加坡已实施二十多年', 6],
+                ['韩国有待验证', 4],
+                ['台湾有待验证', 3],
+                ['国际移民', 7],
+                ['产业结构调整', 5],
+                ['吸取教训', 5],
+                ['小国方法不适用', 6],
+                ['劳动力短缺问题', 4],
+                // ['山东', 4],
+                // ['最敢生', 5],
+                // ['低生育', 4],
+                // ['难以逆转', 3],
+                // ['广东', 3],
+                // ['河南', 3],
+                // ['河北', 3],
+            ],
+            "gridSize": 6, // size of the grid in pixels
+            "weightFactor": 6, // number to multiply for size of each word in the list
+            "fontWeight": 'normal', // 'normal', 'bold' or a callback
+            "fontFamily": 'Times, serif', // font to use
+            "color": 'random-light', // 'random-dark' or 'random-light'
+
+            "backgroundColor": '#FFFFFF', // the color of canvas
+            "rotateRatio": 1 // probability for the word to rotate. 1 means always rotate
+        });
+
+        var options8 = eval({
+            "list": [
+                ['取消生育限制', 9],
+                ['生育鼓励', 9],
+                ['日本', 5],
+                ['新加坡', 5],
+                ['韩国', 5],
+                ['台湾', 5],
+                ['与国内文化背景相似', 4],
+                ['成效并不乐观', 6],
+                ['日本已实施二十多年', 2],
+                ['影响很小', 5],
+                ['新加坡已实施二十多年', 6],
+                ['韩国有待验证', 4],
+                ['台湾有待验证', 3],
+                ['国际移民', 7],
+                ['产业结构调整', 5],
+                ['吸取教训', 5],
+                ['小国方法不适用', 6],
+                ['劳动力短缺问题', 4],
+                // ['山东', 4],
+                // ['最敢生', 5],
+                // ['低生育', 4],
+                // ['难以逆转', 3],
+                // ['广东', 3],
+                // ['河南', 3],
+                // ['河北', 3],
+            ],
+            "gridSize": 6, // size of the grid in pixels
+            "weightFactor": 6, // number to multiply for size of each word in the list
+            "fontWeight": 'normal', // 'normal', 'bold' or a callback
+            "fontFamily": 'Times, serif', // font to use
+            "color": 'random-light', // 'random-dark' or 'random-light'
+
+            "backgroundColor": '#FFFFFF', // the color of canvas
+            "rotateRatio": 1 // probability for the word to rotate. 1 means always rotate
+        });
+
+        var options9 = eval({
+            "list": [
+                ['取消生育限制', 9],
+                ['生育鼓励', 9],
+                ['日本', 5],
+                ['新加坡', 5],
+                ['韩国', 5],
+                ['台湾', 5],
+                ['与国内文化背景相似', 4],
+                ['成效并不乐观', 6],
+                ['日本已实施二十多年', 2],
+                ['影响很小', 5],
+                ['新加坡已实施二十多年', 6],
+                ['韩国有待验证', 4],
+                ['台湾有待验证', 3],
+                ['国际移民', 7],
+                ['产业结构调整', 5],
+                ['吸取教训', 5],
+                ['小国方法不适用', 6],
+                ['劳动力短缺问题', 4],
+                // ['山东', 4],
+                // ['最敢生', 5],
+                // ['低生育', 4],
+                // ['难以逆转', 3],
+                // ['广东', 3],
+                // ['河南', 3],
+                // ['河北', 3],
+            ],
+            "gridSize": 6, // size of the grid in pixels
+            "weightFactor": 6, // number to multiply for size of each word in the list
+            "fontWeight": 'normal', // 'normal', 'bold' or a callback
+            "fontFamily": 'Times, serif', // font to use
+            "color": 'random-light', // 'random-dark' or 'random-light'
+
+            "backgroundColor": '#FFFFFF', // the color of canvas
+            "rotateRatio": 1 // probability for the word to rotate. 1 means always rotate
+        });
+
+        var options10 = eval({
+            "list": [
+                ['取消生育限制', 9],
+                ['生育鼓励', 9],
+                ['日本', 5],
+                ['新加坡', 5],
+                ['韩国', 5],
+                ['台湾', 5],
+                ['与国内文化背景相似', 4],
+                ['成效并不乐观', 6],
+                ['日本已实施二十多年', 2],
+                ['影响很小', 5],
+                ['新加坡已实施二十多年', 6],
+                ['韩国有待验证', 4],
+                ['台湾有待验证', 3],
+                ['国际移民', 7],
+                ['产业结构调整', 5],
+                ['吸取教训', 5],
+                ['小国方法不适用', 6],
+                ['劳动力短缺问题', 4],
+                // ['山东', 4],
+                // ['最敢生', 5],
+                // ['低生育', 4],
+                // ['难以逆转', 3],
+                // ['广东', 3],
+                // ['河南', 3],
+                // ['河北', 3],
+            ],
+            "gridSize": 6, // size of the grid in pixels
+            "weightFactor": 6, // number to multiply for size of each word in the list
+            "fontWeight": 'normal', // 'normal', 'bold' or a callback
+            "fontFamily": 'Times, serif', // font to use
+            "color": 'random-light', // 'random-dark' or 'random-light'
+
+            "backgroundColor": '#FFFFFF', // the color of canvas
+            "rotateRatio": 1 // probability for the word to rotate. 1 means always rotate
+        });
+    </script>
+    </div>
+
+    <div id="boxx">
+    </div>
+
+
+
+    <script>
+        //1.准备树的数据
+        var linkk = 'image://https://i.loli.net/2021/04/26/Yhd4gbyKq6sXMmG.png';
+        var linkk1 = 'image://https://i.loli.net/2021/05/03/K13oJ4fmdOFieTc.png';
+        var data = [
+            {
+                name: "我国老龄化问题的应对措施",
+                value: "01",
+                sj: "-",
+                symbol: linkk,
+                symbolSize: [280, 50],
+            },
+            {
+                name: "从生育角度",
+                value: "0101",
+                sj: "01",
+                symbol: linkk,
+                symbolSize: [130, 50],
+            },
+            {
+                name: "从人口红利角度", value: "0102", sj: "01",
+                symbol: linkk,
+                symbolSize: [165, 50],
+            },
+            {
+                name: "社会保障", value: "0103", sj: "01",
+                symbol: linkk,
+                symbolSize: [120, 50],
+            },
+            {
+                name: "健康与照护", value: "0104", sj: "01",
+                symbol: linkk,
+                symbolSize: [125, 50],
+            },
+            {
+                name: "经济和产业", value: "0105", sj: "01",
+                symbol: linkk,
+                symbolSize: [125, 50],
+            },
+            {
+                name: "全\n面\n二\n孩\n政\n策", value: "010101", sj: "0101",
+                symbol: linkk1,
+                symbolSize: [30, 120],
+            },
+            {
+                name: "取\n消\n生\n育\n限\n制\n与\n生\n育\n鼓\n励\n政\n策", value: "010101", sj: "0101",
+                symbol: linkk1,
+                symbolSize: [30, 180],
+            },
+            // { name: "天河", value: "010102", sj: "0101" },
+            // { name: "黄埔", value: "010103", sj: "0101" },
+            // { name: "白云", value: "010104", sj: "0101" },
+            // { name: "花都", value: "010105", sj: "0101" },
+            // { name: "海珠", value: "010106", sj: "0101" },
+            {
+                name: "延\n长\n第\n一\n类\n人\n口\n红\n利", value: "010201", sj: "0102",
+                symbol: linkk1,
+                symbolSize: [30, 150],
+            },
+            {
+                name: "延\n长\n第\n二\n类\n人\n口\n红\n利", value: "010202", sj: "0102",
+                symbol: linkk1,
+                symbolSize: [30, 150],
+            },
+            {
+                name: "提\n高\n养\n老\n金\n统\n筹\n层\n次", value: "010301", sj: "0103",
+                symbol: linkk1,
+                symbolSize: [30, 150],
+            },
+            {
+                name: "将\n养\n老\n金\n进\n行\n省\n际\n调\n剂", value: "010302", sj: "0103",
+                symbol: linkk1,
+                symbolSize: [30, 150],
+            },
+            {
+                name: "促\n进\n老\n年\n人\n的\n身\n心\n健\n康", value: "010401", sj: "0104",
+                symbol: linkk1,
+                symbolSize: [30, 150],
+            },
+            {
+                name: "降\n低\n医\n疗\n成\n本", value: "010402", sj: "0104",
+                symbol: linkk1,
+                symbolSize: [30, 150],
+            },
+            {
+                name: "市\n场\n社\n会\n资\n源\n完\n善\n养\n老\n体\n系", value: "010501", sj: "0105",
+                symbol: linkk1,
+                symbolSize: [30, 170],
+            },
+            {
+                name: "社\n区\n基\n础\n公\n共\n服\n务\n体\n系", value: "010502", sj: "0105",
+                symbol: linkk1,
+                symbolSize: [30, 150],
+            },
+            // { name: "枫桥", value: "010202", sj: "0102" },
+            // { name: "罗湖", value: "010301", sj: "0103" }
+        ];
+
+        var treeData;
+        window.onload = function () {
+            //2.处理数据
+            treeData = transData(data, 'value', 'sj', 'children');
+            //3.展示数据
+            drawTree(treeData);
+        }
+
+        /**2.数据处理成层级关系的数据***/
+        function transData(a, idStr, pidStr, childrenStr) {
+            var r = [], hash = {}, id = idStr, pid = pidStr, children = childrenStr, i = 0, j = 0, len = a.length;
+            for (; i < len; i++) {
+                hash[a[i][id]] = a[i];
+            }
+            for (; j < len; j++) {
+                var aVal = a[j], hashVP = hash[aVal[pid]];
+                if (hashVP) {
+                    !hashVP[children] && (hashVP[children] = []);
+                    hashVP[children].push(aVal);
+                } else {
+                    r.push(aVal);
+                }
+            }
+            return r;
+        }
+
+        /**
+        *3. 画树
+        */
+        function drawTree(treeData) {
+            var myChart = echarts.init(document.getElementById("boxx"));//div元素节点的对象
+
+            myChart.setOption({
+                tooltip: {
+                    trigger: 'item',
+                    triggerOn: 'mousemove'
+                },
+                series: [{
+                    type: 'tree',
+                    name: 'TREE_ECHARTS',
+                    data: treeData,
+                    top: '10%',
+                    left: '2%',
+                    bottom: '20%',
+                    right: '2%',
+                    // symbol: 'image://https://b-gold-cdn.xitu.io/v3/static/img/45.b99ea03.svg',
+                    // symbol: 'circle.png',
+                    // symbol:'image://https://i.loli.net/2021/04/25/VX4adCtyU8ZRh12.png',
+                    // symbol:'image://circle.svg',
+
+                    symbolSize: 50,
+                    lineStyle: {
+                        normal: {
+                            color: '#FFFFFF',
+                            curveness: 0.5,
+                            width:3,
+                        }
+                    },
+                    label: {
+                        normal: {
+                            // position: 'center',
+                            // verticalAlign: 'middle',
+                            // align: '',
+                            fontSize: 19,
+                            // color: '#E33460',
+                            color: 'rgb(0,49,79)',
+                            fontWeight: 'bolder',
+                        }
+                    },
+                    leaves: {
+                        label: {
+                            // position: 'center',
+                            // verticalAlign: 'middle',
+                            // align: ''
+                            fontSize: 12,
+                            // color: '#E33460',
+                            color: 'rgb(0,49,79)',
+                            fontWeight: 'bolder',
+                        }
+                    },
+                    orient: 'vertical',
+                    emphasis: {
+                        focus: 'descendant'
+                    },
+                    expandAndCollapse: true,
+                    animationDuration: 550,
+                    animationDurationUpdate: 750,
+                    initialTreeDepth: 2  //展示层级数,默认是2
+                }]
+            });
+            //4.树绑定事件
+            myChart.on('click', function (params) {
+                var name = params.data.name;//点击的节点的name
+                var value = params.data.value;//点击的节点的value
+                //调用点击事件
+                clickNode(name, value);
+            });
+        }
+        //节点的点击事件
+        function clickNode(name, value) {
+            if (name == "全\n面\n二\n孩\n政\n策") {
+                document.getElementById("wenben1").style.visibility = "visible";
+                //<span id='my_canvas' style="position:absolute; width:300px; height:300px;"></span> 
+                let doc = document.getElementById('showImageId1')
+                doc.innerHTML = '<span id="my_canvas1" style="position:absolute; width:400px; height:450px;"></span>';
+                var canvas = document.getElementById('my_canvas1');
+                WordCloud(canvas, options1);
+                //document.getElementById("showImageId").style.display = "none";
+                //document.getElementById("showImageId").style.display = "inline";
+            }
+            else if (name == "取\n消\n生\n育\n限\n制\n与\n生\n育\n鼓\n励\n政\n策") {
+                document.getElementById("wenben2").style.visibility = "visible";
+                let doc = document.getElementById('showImageId2')
+                doc.innerHTML = '<span id="my_canvas2" style="position:absolute; width:400px; height:450px;"></span>';
+                var canvas = document.getElementById('my_canvas2');
+                WordCloud(canvas, options2);
+            }
+            else if (name == "延\n长\n第\n一\n类\n人\n口\n红\n利") {
+                document.getElementById("wenben3").style.visibility = "visible";
+                let doc = document.getElementById('showImageId3')
+                doc.innerHTML = '<span id="my_canvas3" style="position:absolute; width:400px; height:450px;"></span>';
+                var canvas = document.getElementById('my_canvas3');
+                WordCloud(canvas, options3);
+            }
+            else if (name == "延\n长\n第\n二\n类\n人\n口\n红\n利") {
+                document.getElementById("wenben4").style.visibility = "visible";
+                let doc = document.getElementById('showImageId4')
+                doc.innerHTML = '<span id="my_canvas4" style="position:absolute; width:400px; height:450px;"></span>';
+                var canvas = document.getElementById('my_canvas4');
+                WordCloud(canvas, options4);
+            }
+            else if (name == "提\n高\n养\n老\n金\n统\n筹\n层\n次") {
+                document.getElementById("wenben5").style.visibility = "visible";
+                let doc = document.getElementById('showImageId5')
+                doc.innerHTML = '<span id="my_canvas5" style="position:absolute; width:400px; height:450px;"></span>';
+                var canvas = document.getElementById('my_canvas5');
+                WordCloud(canvas, options5);
+            }
+            else if (name == "将\n养\n老\n金\n进\n行\n省\n际\n调\n剂") {
+                document.getElementById("wenben6").style.visibility = "visible";
+                let doc = document.getElementById('showImageId6')
+                doc.innerHTML = '<span id="my_canvas6" style="position:absolute; width:400px; height:450px;"></span>';
+                var canvas = document.getElementById('my_canvas6');
+                WordCloud(canvas, options6);
+            }
+            else if (name == "促\n进\n老\n年\n人\n的\n身\n心\n健\n康") {
+                document.getElementById("wenben7").style.visibility = "visible";
+                let doc = document.getElementById('showImageId7')
+                doc.innerHTML = '<span id="my_canvas7" style="position:absolute; width:400px; height:450px;"></span>';
+                var canvas = document.getElementById('my_canvas7');
+                WordCloud(canvas, options7);
+            }
+            else if (name == "降\n低\n医\n疗\n成\n本") {
+                document.getElementById("wenben8").style.visibility = "visible";
+                let doc = document.getElementById('showImageId8')
+                doc.innerHTML = '<span id="my_canvas8" style="position:absolute; width:400px; height:450px;"></span>';
+                var canvas = document.getElementById('my_canvas8');
+                WordCloud(canvas, options8);
+            }
+            else if (name == "市\n场\n社\n会\n资\n源\n完\n善\n养\n老\n体\n系") {
+                document.getElementById("wenben9").style.visibility = "visible";
+                let doc = document.getElementById('showImageId9')
+                doc.innerHTML = '<span id="my_canvas9" style="position:absolute; width:400px; height:450px;"></span>';
+                var canvas = document.getElementById('my_canvas9');
+                WordCloud(canvas, options9);
+            }
+            else if (name == "社\n区\n基\n础\n公\n共\n服\n务\n体\n系") {
+                document.getElementById("wenben10").style.visibility = "visible";
+                let doc = document.getElementById('showImageId10')
+                doc.innerHTML = '<span id="my_canvas10" style="position:absolute; width:400px; height:450px;"></span>';
+                var canvas = document.getElementById('my_canvas10');
+                WordCloud(canvas, options10);
+            }
+
+        }
+
+    </script>
+
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: ".nav_box",
+            data: {
+                isActive: 5
+            },
+            methods: {
+                turn_1: function () {
+                    window.location.href = "page1.html"
+                },
+                turn_2: function () {
+                    window.location.href = "page2.html"
+                },
+                turn_4: function () {
+                    window.location.href = "page3.html"
+                },
+                turn_5: function () {
+                    window.location.href = "page4.html"
+                },
+                turn_6: function () {
+                    window.location.href = "page5.html"
+                },
+                turn_3: function () {
+                    window.location.href = "./src/index.html"
+                }
+            },
+        })
+
+    </script>
+
+</body>
+
+</html>

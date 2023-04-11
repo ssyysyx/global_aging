@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>china-map-test1</title>
+	<script src="jquery-1.12.4.js"></script>
+	<script src="echarts.js"></script>
+	<script src="china.js"></script>
+</head>
+<body>
+	<div id="container" style="width:1000px;height: 650px;"></div>
+
+	<script>
+		var dom = document.getElementById('container');
+		var myChart = echarts.init(dom);
+
+		$.when(
+			$.getJSON('dataForMap.json')
+		).done(function(res){
+			dataset = res.filter(function(d){
+				return d.year == '2010';
+			})
+			var datasets = {
+				dimensions:[{name:'provinceName'},{name:'populationRate'}],
+				source:[],
+			};
+
+			for(var i = 0; i < dataset.length; i++){
+				datasets.source.push(dataset[i]);
+			}
+
+			var option = {
+				title: {
+					text: '2010年中国各省老年人口（65岁及以上）占比对比',
+                    textStyle:{
+                        fontSize:30,
+						color:'white'
+                    },
+                    left:'center',
+                    top:10
+				},
+				// 提示框
+				tooltip: {
+					trigger: 'item',
+					formatter: '{b}<br/>老年人口占比: {c}%'
+				},
+				toolbox: {
+					show: true,
+					orient: 'vertical',
+					left: 'right',
+					top: 'center',
+					feature: {
+						dataView: {readOnly: false},
+						restore: {},
+						saveAsImage: {}
+					}
+				},
+				visualMap: {
+					min: 3,
+					max: 12,
+					text: ['High', 'Low'],
+					realtime: false,
+					calculable: true,
+					inRange: {
+						color: ['lightskyblue', 'yellow', 'red']
+					}
+				},
+				geo:{
+					map:'china',
+					emphasis:{
+						label:false,
+					}
+				},
+				dataset:datasets,
+				series:[{
+					name: '中国各省人口老龄化对比',
+					type: 'map',
+					map:'china', // 自定义扩展图表类型
+					label: {
+						show: false
+					},
+				}],
+                graphic:{
+                    elements: [{
+                        type: 'text',
+                        left: 160,
+                        bottom: 60,
+                        style: {
+                            text: '2010年',
+                            font: 'bolder 80px monospace',
+                            fill: 'rgba(100, 100, 100, 0.25)'
+                        },
+                        z: 100
+                    }]
+                }
+			};
+
+			myChart.setOption(option);
+		});
+	</script>
+</body>
+</html>

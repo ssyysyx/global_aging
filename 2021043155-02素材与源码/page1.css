@@ -1,0 +1,101 @@
+@font-face {
+    font-family: mytimesfont;
+    src: url('TimesNewRoman.ttf');
+}
+
+@font-face {
+    font-family: myFont;
+    src: url('mefont.TTF');
+}
+
+.nav_box {
+    width: 64%;
+    min-width: 800px;
+    margin: 0 auto;
+    margin-top: 50px;
+    margin-left: 280px;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    height: 36px;
+    border-radius: 36px;
+    position: relative;
+    font-size: 18px;
+    font-weight: bold;
+}
+    .in {
+        width: calc(20%);
+        height: 36px;
+        color: rgb(48, 58, 192);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        z-index: 1;
+        cursor: pointer;
+    }
+
+    .in_on {
+        background: #e2e604;
+    }
+
+    .in_off {
+        background: #c8c8c8;
+    }
+
+    .in_cot {
+        position: absolute;
+        width: 36px;
+        height: 36px;
+        border-top: 3px solid white;
+        border-right: 3px solid white;
+        transform: rotate(45deg);
+        left: -10px;
+        top: 0;
+        z-index: 2;
+    }
+    .box { overflow: hidden; position:relative; border-radius:5px 5px 5px 5px;border:5px solid rgb(255, 255, 255);width:1000px; height:550px; margin:50px auto;} 
+
+    .smallerbox { overflow: hidden; position:relative; width:900px; height:530px; margin:0 auto;} 
+    
+    #bbox { position:relative; width:950px; height:550px; margin:0 auto;} 
+
+    .arr-left {
+        position:relative;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color:aliceblue;
+        margin-left: 3px;
+        z-index: 99;
+    }
+    .arr-right {
+        position:relative;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color:aliceblue;
+        z-index: 99;
+        margin-left: 3px;
+    }      
+
+    .circle_left{
+        position:absolute;
+        right: 1%;
+        top: 50%;
+        border:2px solid #FFFFFF;
+        width:30px;
+        height:30px;
+        border-radius: 15px;
+        z-index: 98;
+    }
+
+    .circle_right{
+        position:absolute;
+        left: 1%;
+        top: 50%;
+        border:2px solid #FFFFFF;
+        width:30px;
+        height:30px;
+        border-radius: 15px;
+        z-index: 98;
+        margin:auto;
+    }

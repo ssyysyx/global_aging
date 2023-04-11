@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+	<body>
+		
+		<div id="app">
+			
+			{{msg}}
+			<div class="left-cla">
+				<ul>
+					<li><a href="#home" @click="changeActive(1)">地图1</a></li>
+					<li><a href="#news" @click="changeActive(2)">地图2</a></li>
+					<li><a href="#contact" @click="changeActive(3)">地图3</a></li>
+					<li><a href="#about" @click="changeActive(4)">地图4</a></li>
+				</ul>
+			</div>
+			<div class="right-cla">
+				<!-- <div id="tabOne"></div> -->
+				<iframe v-if="activeIndex==1" style="width: 100%;height: 100%;margin-left: 10%;" align="center" src="barplus.html" frameborder="no" border="0" marginwidth="0" marginheight="0"></iframe>
+				<iframe v-if="activeIndex==2" style="width: 100%;height: 100%;" align="center" src="line_bar.html" frameborder="no" border="0" marginwidth="0" marginheight="0"></iframe>
+				<iframe v-if="activeIndex==3" style="width: 100%;height: 100%;" align="center" src="历年出生人口.html" frameborder="no" border="0" marginwidth="0" marginheight="0"></iframe>
+				<iframe v-if="activeIndex==4" style="width: 100%;height: 100%;" align="center" src="人口结构金字塔.html" frameborder="no" border="0" marginwidth="0" marginheight="0"></iframe>
+				<!-- <iframe style="width: 100%;height: 100%;" align="center" src="barplus.html" frameborder="no" border="0" marginwidth="0" marginheight="0"></iframe> -->
+			</div>
+			
+		</div>
+		
+				
+		<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        
+        <!-- 生产环境版本，优化了尺寸和速度 -->
+        <!--  <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+		
+	</body>
+	
+	
+	<script>
+			new Vue({
+		        el: '#app',
+		        data: function () {
+		            return {
+		            	activeIndex:1
+		            }
+		        },
+				methods:{
+					changeActive(index){
+						console.log(index);
+						this.activeIndex=index;
+					}
+				}
+		    });
+	</script>
+</html>

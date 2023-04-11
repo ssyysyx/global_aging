@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head> 
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="echarts.min.js"></script>
+    <script src="world.js"></script>
+    <script src="china.js"></script>
+    <link rel="stylesheet" href="page1.css">
+    <link rel="stylesheet" href="iconfont.css">
+    <style>
+        .v_w-enter {
+            opacity: 0;
+            transform: translateX(-200px);
+        }
+
+        .v_w-enter-to {
+            opacity: 1;
+        }
+
+        .v_w-enter-active {
+            transition: all 2s;
+        }
+
+        .v_c-enter {
+            opacity: 0;
+            transform: translateX(200px);
+        }
+
+        .v_c-enter-to {
+            opacity: 1;
+        }
+
+        .v_c-enter-active {
+            transition: all 2s;
+        }
+
+        /* .v_c-leave{
+            opacity:1;
+            transform: translateX(-200px);
+        }
+        .v_c-leave-to{
+            opacity:0;
+        }
+        .v_c-leave-active{
+            transition: all 2s;
+        } */
+    </style>
+</head>
+
+
+<body background="beijing.png">
+    <span style="position:absolute; background-image: url('tiaotiao.png'); width:60px; height:3px; margin-top: 40px; margin-left: 320px;"></span>
+    <div class="nav_box" style="font-family:myFont">
+        <div :class="[isActive>=1?'in in_on':'in in_off']" @click="turn_1" style="padding-left:12px; z-index: 303;">老年人口情况
+        </div>
+        <div :class="[isActive>=2?'in in_on':'in in_off']" @click="turn_2" style="padding-left:30px; z-index: 302;">分析库
+            <div :class="[isActive>=1?'in_cot in_on':'in_cot in_off']"></div>
+        </div>
+        <div :class="[isActive>=3?'in in_on':'in in_off']" @click="turn_3" style="padding-left:40px;z-index: 300;">时空动态对比
+            <div :class="[isActive>=2?'in_cot in_on':'in_cot in_off']"></div>
+        </div>
+        <div :class="[isActive>=4?'in in_on':'in in_off']" @click="turn_4" style="padding-left:30px;">人口大事纪
+            <div :class="[isActive>=3?'in_cot in_on':'in_cot in_off']"></div>
+        </div>
+        <div :class="[isActive>=5?'in in_on':'in in_off']" @click="turn_5" style="padding-left:30px;">应对措施
+            <div :class="[isActive>=4?'in_cot in_on':'in_cot in_off']"></div>
+        </div>
+        <div :class="[isActive>=6?'in in_on':'in in_off']" @click="turn_6" style="padding-left:18px;">舆情舆论
+            <div :class="[isActive>=5?'in_cot in_on':'in_cot in_off']"></div>
+        </div>
+    </div>
+
+    <div class="box">
+        <span class="circle_left">
+            <span class="iconfont arr-left" @click="toggle_left">&#xe6ed;</span>
+        </span>
+        <span class="circle_right">
+            <span class="iconfont arr-right" @click="toggle_right">&#xe6ef;</span>
+        </span>
+        <!-- <div class="smallerbox" id="main" ></div> -->
+        <!-- <component v-bind:is="name"></component> -->
+        <transition mode="out-in" name="v_c">
+            <div class="smallerbox" id="main_c" v-show=isShow_c></div>
+        </transition>
+        <transition mode="out-in" name="v_w">
+            <div class="smallerbox" id="main_w" v-show=isShow_w></div>
+        </transition>
+
+        <!-- <div class="smallerbox" id="main" v-show="isShow"> -->
+    </div>
+    </div>
+
+
+    <!-- <template id="infoo_w">
+        <div class="smallerbox" id="main_w" ></div>
+    </template>
+    <template id="infoo_c">
+        <div class="smallerbox" id="main_c" ></div>
+    </template> -->
+    <script>
+        // Vue.component("worldold", {
+        //     template: "#infoo_w"
+        // });
+        // Vue.component("chinaold", {
+        //     template: "#infoo_c"
+        // });
+
+
+        var app = new Vue({
+            el: ".nav_box",
+            data: {
+                isActive: 1
+            },
+            methods: {
+                turn_1: function () {
+                    window.location.href = "page1.html"
+                },
+                turn_2: function () {
+                    window.location.href = "page2.html"
+                },
+                turn_4: function () {
+                    window.location.href = "page3.html"
+                },
+                turn_5: function () {
+                    window.location.href = "page4.html"
+                },
+                turn_6: function () {
+                    window.location.href = "page5.html"
+                },
+                turn_3: function () {
+                    window.location.href = "./src/index.html"
+                }
+            },
+        })
+        var app = new Vue({
+            el: ".box",
+            data: {
+                index: 1,
+                isShow_w: true,
+                isShow_c: false,
+                // name: "chinaold",
+            },
+            methods: {
+                rollShow: function () {
+                    this.isShow = !this.isShow;
+                },
+                toggle_right: function () {
+                    this.isShow_w = true;
+                    this.isShow_c = false;
+                },
+                toggle_left: function () {
+                    this.isShow_c = true;
+                    this.isShow_w = false;
+                }
+            },
+        })
+    </script>
+
+
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main_w'));
+
+        // 指定图表的配置项和数据
+        var name_title = "2020年世界各国65岁以上人口情况"
+        var mapName = 'world'
+        var data = [
+            //补充内容
+            //https://www.kylc.com/stats/global/yearly_overview/g_population_65above_perc.html
+            { name: 'United States', value: 15 },
+            { name: 'China', value: 11 },
+            { name: 'Japan', value: 27 },
+            { name: 'Germany', value: 21 },
+            { name: 'Finland', value: 20.26 },
+            { name: 'United Kingdom', value: 19 },
+            { name: 'Greenland', value: 7.6 },
+            { name: 'India', value: 6 },
+            { name: 'Italy', value: 22.36 },
+            { name: 'Brazil', value: 9 },
+            { name: 'Canada', value: 17 },
+            { name: 'Russia', value: 14 },
+            { name: 'Croatia', value: 18.88 },
+            { name: 'Greese', value: 19.95 },
+            { name: 'Sweden', value: 19.60 },
+            { name: 'Saudi Arabia', value: 3 },
+            { name: 'Pakistan', value: 4 },
+            { name: 'South Africa', value: 5 },
+            { name: 'Indonesia', value: 5 },
+            { name: 'India', value: 6 },
+            { name: 'Mexico', value: 7 },
+            { name: 'Turkey', value: 8 },
+            { name: 'Brazil', value: 9 },
+            { name: 'France', value: 20 },
+            { name: 'Korea', value: 15.06 },
+            { name: 'Australia', value: 16 },
+            { name: 'Spain', value: 19.65 },
+            { name: 'Portugal', value: 22.36 },
+            { name: 'Bulgaria', value: 21.25 },
+            { name: 'Malta', value: 20.82 },
+            { name: 'Latvia', value: 20.34 },
+            { name: 'Slovenia', value: 20.19 },
+            { name: 'Lithuania', value: 20.16 },
+            { name: 'Estonia', value: 19.99 },
+            { name: 'Mongolia', value: 4.19 },
+            { name: 'Kazakhstan', value: 7.65 },
+            { name: 'Dem. Rep. Korea', value: 9.26 },
+            { name: 'Norway', value: 17.27 },
+            { name: 'Iceland', value: 15.19 },
+            { name: 'Ireland', value: 14.22 },
+            { name: 'Peru', value: 8.39 },
+            { name: 'Philippines', value: 5.31 },
+            { name: 'Cuba', value: 15.56 },
+            { name: 'Argentina', value: 11.24 },
+            { name: 'Chile', value: 11.88 },
+            { name: 'New Zealand', value: 15.99 },
+            { name: 'Papua New Guinea', value: 3.51 },
+            { name: 'Uruguay', value: 14.94 },
+            { name: 'Paraguay', value: 6.62 },
+            { name: 'Bolivia', value: 7.34 },
+            { name: 'Panama', value: 8.31 },
+            { name: 'Colombia', value: 8.77 },
+            { name: 'Ecuador', value: 7.37 },
+            { name: 'Venezuela', value: 7.61 },
+            { name: 'Guyana', value: 6.71 },
+            { name: 'Suriname', value: 7.02 },
+            { name: 'Bahamas', value: 7.48 },
+            { name: 'Haiti', value: 5.06 },
+            { name: 'Dominican Rep.', value: 7.3 },
+            { name: 'Guatemala', value: 4.93 },
+            { name: 'Nicaragua', value: 5.46 },
+            { name: 'Belize', value: 4.87 },
+            { name: 'El Salvador', value: 8.47 },
+            { name: 'Costa Rica', value: 9.88 },
+            { name: 'Jamaica', value: 8.92 },
+            { name: 'Puerto Rico', value: 19.7 },
+            { name: 'Trinidad and Tobago', value: 11.12 },
+            { name: 'Honduras', value: 4.83 },
+            { name: 'Denmark', value: 19.97 },
+            { name: 'Belgium', value: 19.01 },
+            { name: 'Poland', value: 18.12 },
+            { name: 'Belarus', value: 15.2 },
+            { name: 'Netherlands', value: 19.61 },
+            { name: 'Slovakia', value: 16.17 },
+            { name: 'Hungary', value: 19.69 },
+            { name: 'Serbia', value: 18.74 },
+            { name: 'Macedonia', value: 14.09 },
+            { name: 'Greece', value: 21.94 },
+            { name: 'Ukraine', value: 16.7 },
+            { name: 'Romania', value: 18.79 },
+            { name: 'Moldova', value: 12.01 },
+            { name: 'Austria', value: 19.08 },
+            { name: 'Switzerland', value: 18.84 },
+            { name: 'Czech Rep.', value: 19.8 },
+            { name: 'Bosnia and Herz.', value: 17.2 },
+            { name: 'Madagascar', value: 3.04 },
+            { name: 'Malaysia', value: 6.92 },
+            { name: 'Vietnam', value: 7.55 },
+            { name: 'Sri Lanka', value: 10.84 },
+            { name: 'Lao PDR', value: 4.16 },
+            { name: 'Cambodia', value: 4.72 },
+            { name: 'Thailand', value: 12.41 },
+            { name: 'Myanmar', value: 6.01 },
+            { name: 'Bangladesh', value: 5.18 },
+            { name: 'Nepal', value: 5.78 },
+            { name: 'Bhutan', value: 6.09 },
+            { name: 'Botswana', value: 4.37 },
+            { name: 'Namibia', value: 3.61 },
+            { name: 'Mozambique', value: 2.88 },
+            { name: 'Montenegro', value: 15.39 },
+            { name: 'Albania', value: 14.2 },
+            { name: 'Georgia', value: 15.09 },
+            { name: 'Uzbekistan', value: 4.6 },
+            { name: 'Turkmenistan', value: 4.59 },
+            { name: 'Kyrgyzstan', value: 4.6 },
+            { name: 'Tajikistan', value: 7.65 },
+            { name: 'Azerbaijan', value: 6.45 },
+            { name: 'Iran', value: 6.63 },
+            { name: 'Afghanistan', value: 2.62 },
+            { name: 'Iraq', value: 3.4 },
+            { name: 'Syria', value: 4.69 },
+            { name: 'Qatar', value: 1.52 },
+            { name: 'United Arab Emirates', value: 1.16 },
+            { name: 'Oman', value: 2.45 },
+            { name: 'Yemen', value: 2.9 },
+            { name: 'Armenia', value: 11.48 },
+            { name: 'Kuwait', value: 2.76 },
+            { name: 'Lebanon', value: 7.27 },
+            { name: 'Palestine', value: 3.17 },
+            { name: 'Israel', value: 12.21 },
+            { name: 'Jordan', value: 3.89 },
+            { name: 'Zimbabwe', value: 2.98 },
+            { name: 'Angola', value: 2.2 },
+            { name: 'Zambia', value: 2.12 },
+            { name: 'Malawi', value: 2.64 },
+            { name: 'Tanzania', value: 2.62 },
+            { name: 'Dem. Rep. Congo', value: 2.72 },
+            { name: 'Kenya', value: 2.42 },
+            { name: 'Somalia', value: 2.89 },
+            { name: 'Uganda', value: 1.96 },
+            { name: 'Ethiopia', value: 3.52 },
+            { name: 'S. Sudan', value: 3.63 },
+            { name: 'Somalia', value: 2.89 },
+            { name: 'Congo', value: 2.72 },
+            { name: 'Gabon', value: 3.54 },
+            { name: 'Central African Rep.', value: 2.81 },
+            { name: 'Cameroon', value: 2.72 },
+            { name: 'Nigeria', value: 2.74 },
+            { name: 'Benin', value: 3.26 },
+            { name: 'Togo', value: 2.89 },
+            { name: 'Ghana', value: 3.1 },
+            { name: 'Sudan', value: 3.63 },
+            { name: 'Chad', value: 2.49 },
+            { name: 'Niger', value: 2.6 },
+            { name: 'Burkina Faso', value: 2.41 },
+            { name: 'Eritrea', value: 4.5 },
+            { name: 'Eq. Guinea', value: 2.94 },
+            { name: 'Rwanda', value: 3.03 },
+            { name: 'Egypt', value: 5.28 },
+            { name: 'Libya', value: 4.46 },
+            { name: 'Mali', value: 2.5 },
+            { name: 'Morocco', value: 7.3 },
+            { name: 'Mauritania', value: 3.16 },
+            { name: 'Guinea', value: 2.94 },
+            { name: 'Senegal', value: 3.1 },
+            { name: 'Burundi', value: 2.31 },
+            { name: 'Algeria', value: 6.55 },
+            { name: 'Tunisia', value: 8.59 },
+            { name: 'Liberia', value: 3.29 },
+            { name: 'Sierra Leone', value: 2.95 },
+            { name: 'Guinea-Bissau', value: 2.86 },
+            { name: 'Swaziland', value: 4.01 },
+            { name: 'Lesotho', value: 4.93 },
+            { name: 'Djibouti', value: 4.61 },
+            { name: 'Cyprus', value: 14.05 },
+            { name: 'Côte d\'Ivoire', value: 2.87 },
+            { name: 'Fiji', value: 5.62 },
+            { name: 'W. Sahara', value:2.0},
+            { name: '', value:2.0}
+        ];
+
+        var option = {
+            title: {
+                text: name_title,
+                padding: 10,
+                x: 'center',
+                textStyle: {
+                    fontSize: 32,
+                    color: "#FFFFFF",
+                },
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: function (params) {
+                    var toolTiphtml = ''
+                    if (isNaN(params.value)) {
+                        toolTiphtml = params.name + ' 暂无数据';
+                    }
+                    else {
+                        toolTiphtml = params.name + ' 65岁以上人口比例 ' + params.value + '%';
+                    }
+                    //console.log(toolTiphtml)                        
+                    return toolTiphtml;
+                }
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            visualMap: {
+                padding: 30,
+                show: true,
+                left: 'left',
+                top: 'bottom',
+                seriesIndex: [0],
+                type: 'piecewise',
+                pieces: [
+                    { min: 25, max: 30, color: 'rgb(254,57,101)' },
+                    { min: 20, max: 25, color: 'rgb(252,157,154)' },
+                    { min: 15, max: 20, color: 'rgb(249,205,173)' },
+                    { min: 10, max: 15, color: 'rgb(200,200,169)' },
+                    { min: 0, max: 10, color: 'rgb(131,175,155)' }
+                ],
+                textStyle: {
+                    color: '#FFFFFF'
+                },
+                formatter: function (min, max) {
+                    return min + '% ~' + max + '%';
+                }
+            },
+            geo: {
+                show: true,
+                map: mapName,
+                label: {
+                    normal: {
+                        show: false,
+                        fontSize: 12,
+                    },
+                    emphasis: {
+                        show: false,
+                    }
+                },
+                roam: true,
+                itemStyle: {
+                    normal: {
+                        areaColor: '#F6F6F6',
+                        borderColor: '#666666',
+                    },
+                    emphasis: {
+                        areaColor: '#0099CC',
+                    }
+                }
+            },
+            series: [
+                {
+                    type: 'map',
+                    map: mapName,
+                    geoIndex: 0,
+                    animation: false,
+                    data: data
+                },
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main_c'));
+
+        // 指定图表的配置项和数据
+        var name_title = "2020年中国各省份65岁以上人口情况"
+        var mapName = 'china'
+        //参考https://www.askci.com/news/data/hongguan/20201211/1531111309556.shtml
+        var data = [
+            { name: '广东', value: 8.6 },
+            { name: '江苏', value: 15.1 },
+            { name: '山东', value: 15.8 },
+            { name: '浙江', value: 14.0 },
+            { name: '河南', value: 11.6 },
+            { name: '四川', value: 15.7 },
+            { name: '湖北', value: 13.1 },
+            { name: '湖南', value: 13.1 },
+            { name: '河北', value: 13.1 },
+            { name: '福建', value: 10.0 },
+            { name: '上海', value: 16.3 },
+            { name: '北京', value: 11.5 },
+            { name: '安徽', value: 14.0 },
+            { name: '辽宁', value: 15.9 },
+            { name: '陕西', value: 12.0 },
+            { name: '江西', value: 10.2 },
+            { name: '重庆', value: 15.3 },
+            { name: '广西', value: 10.2 },
+            { name: '天津', value: 12.1 },
+            { name: '云南', value: 9.9 },
+            { name: '内蒙古', value: 10.2 },
+            { name: '山西', value: 11.0 },
+            { name: '黑龙江', value: 13.8 },
+            { name: '吉林', value: 13.3 },
+            { name: '贵州', value: 11.6 },
+            { name: '新疆', value: 8.1 },
+            { name: '甘肃', value: 11.5 },
+            { name: '海南', value: 9.3 },
+            { name: '宁夏', value: 9.5 },
+            { name: '青海', value: 8.5 },
+            { name: '西藏', value: 6.0 },
+            { name: '台湾', value: 16},
+            { name: '南海诸岛', value: 9.3},
+
+
+        ];
+
+        var option = {
+            title: {
+                text: name_title,
+                padding: 10,
+                x: 'center',
+                textStyle: {
+                    fontSize: 32,
+                    color: "#FFFFFF",
+                },
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: function (params) {
+                    var toolTiphtml = ''
+                    if (isNaN(params.value)) {
+                        toolTiphtml = params.name + '暂无数据'
+                    } else {
+                        toolTiphtml = params.name + '65岁以上人口比例' + params.value + '%'
+                    }
+                    //console.log(toolTiphtml)                        
+                    return toolTiphtml;
+                }
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            visualMap: {
+                show: true,
+                left: 'left',
+                top: 'bottom',
+                seriesIndex: [0],
+                type: 'piecewise',
+                pieces: [
+                    { min: 6, max: 9, color: 'rgb(131,175,155)' },
+                    { min: 9, max: 11, color: 'rgb(200,200,169)' },
+                    { min: 11, max: 13, color: 'rgb(249,205,173)' },
+                    { min: 13, max: 15, color: 'rgb(252,157,154)' },
+                    { min: 15, max: 17, color: 'rgb(254,57,101)' },
+                ],
+                textStyle: {
+                    color: '#FFFFFF'
+                },
+                formatter:function(min, max) {
+                    return min+'% ~'+max+'%';
+                }
+            },
+            geo: {
+                show: true,
+                map: mapName,
+                label: {
+                    normal: {
+                        show: true,
+                        fontSize: 12,
+                    },
+                    emphasis: {
+                        show: false,
+                    }
+                },
+                roam: false,
+                itemStyle: {
+                    normal: {
+                        areaColor: '#FFFFFF',
+                        borderColor: '#666666',
+                    },
+                    emphasis: {
+                        areaColor: '#0099CC',
+                    }
+                }
+            },
+            series: [
+                {
+                    type: 'map',
+                    map: mapName,
+                    geoIndex: 0,
+                    animation: false,
+                    data: data
+                },
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+
+</body>
+
+</html>

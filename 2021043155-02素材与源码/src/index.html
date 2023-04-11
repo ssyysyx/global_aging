@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>首页</title>
+	<meta name="viewport" content="width=device-width,user-scalable==no,
+		maximum-scale=1.0,minimum-scale=1.0" />
+	<link href="../static/css/index.css" rel="stylesheet" />
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<link rel="stylesheet" href="../page1.css">
+	<script src="../static/js/index.js"></script>
+</head>
+
+<body background="../beijing.png">
+	<div>
+		<span style="position:absolute; background-image: url('tiaotiao.png'); width:60px; height:3px; margin-top: 40px; margin-left: 645px;"></span>
+		<div class="nav_box" style="font-family:myFont">
+			<div :class="[isActive>=1?'in in_on':'in in_off']" @click="turn_1" style="padding-left:12px; z-index: 303;">老年人口情况
+			</div>
+			<div :class="[isActive>=2?'in in_on':'in in_off']" @click="turn_2" style="padding-left:30px; z-index: 302;">分析库
+				<div :class="[isActive>=1?'in_cot in_on':'in_cot in_off']"></div>
+			</div>
+			<div :class="[isActive>=3?'in in_on':'in in_off']" @click="turn_3" style="padding-left:40px;z-index: 300;">时空动态对比
+				<div :class="[isActive>=2?'in_cot in_on':'in_cot in_off']"></div>
+			</div>
+			<div :class="[isActive>=4?'in in_on':'in in_off']" @click="turn_4" style="padding-left:30px;">人口大事纪
+				<div :class="[isActive>=3?'in_cot in_on':'in_cot in_off']"></div>
+			</div>
+			<div :class="[isActive>=5?'in in_on':'in in_off']" @click="turn_5" style="padding-left:30px;">应对措施
+				<div :class="[isActive>=4?'in_cot in_on':'in_cot in_off']"></div>
+			</div>
+			<div :class="[isActive>=6?'in in_on':'in in_off']" @click="turn_6" style="padding-left:18px;">舆情舆论
+				<div :class="[isActive>=5?'in_cot in_on':'in_cot in_off']"></div>
+			</div>
+		</div>
+		<div id="app">
+		<!-- <div class="tab-cla">
+			<div class="text-cla">全球人口老龄化数据的时空及动态可视化展示</div>
+		</div> -->
+		<div class="foot-cla">
+			<div class="left-cla" style="margin-left:25px;">
+				<ul>
+					<li style="margin-top: 13%;">
+						<div href="#home" @click="changeActive(1)">2020各省人口年龄构成</div>
+					</li>
+					<li>
+						<div href="#news" @click="changeActive(2)">全国人口增长情况</div>
+					</li>
+					<li>
+						<div href="#contact" @click="changeActive(3)">统计公报历年出生人口</div>
+					</li>
+					<li>
+						<div href="#about" @click="changeActive(4)">中国人口结构金字塔</div>
+					</li>
+					<li>
+						<div href="#about" @click="changeActive(5)">全球老龄化条形竞赛图</div>
+					</li>
+					<li>
+						<div href="#about" @click="changeActive(6)">2000年老年人口占比对比</div>
+					</li>
+					<li>
+						<div href="#about" @click="changeActive(7)">2010年老年人口占比对比</div>
+					</li>
+					<li>
+						<div href="#about" @click="changeActive(8)">2019年老年人口占比对比</div>
+					</li>
+					<li>
+						<div href="#about" @click="changeActive(9)">2020年中国各省对比</div>
+					</li>
+					<li>
+						<div href="#about" @click="changeActive(10)">少数民族-汉族对比图</div>
+					</li>
+					<li>
+						<div href="#about" @click="changeActive(11)">沿海-中西部对比图</div>
+					</li>
+				</ul>
+			</div>
+			<div class="right-cla">
+				<!-- <div id="tabOne"></div> -->
+				<iframe v-if="activeIndex==1" class="map-cla" style="margin-left: 5%;margin-top: 1%;" align="center" src="barplus.html" frameborder="no"
+					border="0" marginwidth="0" marginheight="0"></iframe>
+				<iframe v-if="activeIndex==2" class="map-cla" style="margin-top: 3%;margin-left: 3%;" align="center" src="line_bar.html"
+					frameborder="no" border="0" marginwidth="0" marginheight="0"></iframe>
+				<iframe v-if="activeIndex==3" class="map-cla" style="margin-top: 3%;margin-left: 3%;" align="center" src="历年出生人口.html"
+					frameborder="no" border="0" marginwidth="0" marginheight="0"></iframe>
+				<iframe v-if="activeIndex==4" class="map-cla" style="margin-top: 3%;margin-left: 3%;width: 100%;" align="center"
+					src="人口结构金字塔1.0.html" frameborder="no" border="0" marginwidth="0" marginheight="0"></iframe>
+				<iframe v-if="activeIndex==5" class="map-cla" style="margin-left: 3%;width: 86%;margin-top: 2%;" align="center"
+					src="./动态排序实现flourish/index.html" frameborder="no" border="0" marginwidth="0"
+					marginheight="0"></iframe>
+				<iframe v-if="activeIndex==6" class="map-cla" style="margin-left: 5%;width: 100%;min-height: 100%;" align="center"
+					src="china-map-2000.html" frameborder="no" border="0" marginwidth="0" marginheight="0"></iframe>
+				<iframe v-if="activeIndex==7" class="map-cla" style="margin-left: 5%;" align="center"
+					src="china-map-2010.html" frameborder="no" border="0" marginwidth="0" marginheight="0"></iframe>
+				<iframe v-if="activeIndex==8" class="map-cla" style="margin-left: 5%;" align="center"
+					src="china-map-2019.html" frameborder="no" border="0" marginwidth="0" marginheight="0"></iframe>
+				<iframe v-if="activeIndex==9" class="map-cla" style="margin-left: 0%;margin-top: 2%;" align="center"
+					src="2020年中国各省对比.html" frameborder="no" border="0" marginwidth="0" marginheight="0"></iframe>
+				<iframe v-if="activeIndex==10" class="map-cla" style="margin-left: 0%;margin-top: 2%;" align="center"
+					src="少数民族-汉族对比图.html" frameborder="no" border="0" marginwidth="0" marginheight="0"></iframe>
+				<iframe v-if="activeIndex==11" class="map-cla" style="margin-left: 0%;margin-top: 2%;" align="center"
+					src="沿海-内陆对比图.html" frameborder="no" border="0" marginwidth="0" marginheight="0"></iframe>
+				<!-- <iframe style="width: 100%;height: 100%;" align="center" src="barplus.html" frameborder="no" border="0" marginwidth="0" marginheight="0"></iframe> -->
+			</div>
+		</div>
+	</div>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</body>
+<script>
+	let app = new Vue({
+		el: '#app',
+		data: function () {
+			return {
+				activeIndex: 1
+			}
+		},
+		methods: {
+			changeActive(index) {
+				console.log(index);
+				this.activeIndex = index;
+			}
+		}
+	});
+</script>
+<script>
+	var app1 = new Vue({
+		el: ".nav_box",
+		data: {
+			isActive: 3
+		},
+		methods: {
+			turn_1: function () {
+				window.location.href = "../page1.html"
+			},
+			turn_2: function () {
+				window.location.href = "../page2.html"
+			},
+			turn_4: function () {
+				window.location.href = "../page3.html"
+			},
+			turn_5: function () {
+				window.location.href = "../page4.html"
+			},
+			turn_6: function () {
+				window.location.href = "../page5.html"
+			},
+			turn_3: function () {
+				window.location.href = "index.html"
+			}
+		},
+	})
+</script>
+
+</html>

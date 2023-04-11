@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="jindu.css">
+</head>
+
+<body>
+    <script type="text/javascript" src="https://wow.techbrood.com/libs/jquery/jquery-2.1.1.min.js"></script>
+    <script src="https://wow.techbrood.com/libs/jquery/jquery-1.11.1.min.js"></script>
+    <div id="container">
+
+        <svg version="1.1" width="180px" height="180px" viewBox="0 0 180 180">
+            <defs>
+
+                <filter id="glow" y="-50%" height="180%">
+                    <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+                    <feMerge>
+                        <feMergeNode in="coloredBlur" />
+                        <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                </filter>
+
+                <filter id="glow2" y="-50%" height="180%">
+                    <feGaussianBlur stdDeviation="1" result="coloredBlur" />
+                    <feMerge>
+                        <feMergeNode in="coloredBlur" />
+                        <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                </filter>
+            </defs>
+
+            <g filter="url(#glow)">
+                <path id="outline" fill="none" stroke="#ededed" stroke-width="10" stroke-linecap="round"
+                    stroke-linejoin="round" stroke-miterlimit="10" d="
+	M90.5,161C51.6,161,20,129.4,20,90.5S51.6,20,90.5,20S161,51.6,161,90.5S129.4,161,90.5,161" />
+                <path id="outline_bg" fill="none" opacity="0.02" stroke="#ededed" stroke-width="10"
+                    stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+	M90.5,161C51.6,161,20,129.4,20,90.5S51.6,20,90.5,20S161,51.6,161,90.5S129.4,161,90.5,161" />
+                <path id="tick" fill="none" stroke="#ededed" stroke-width="10" stroke-linecap="round"
+                    stroke-linejoin="round" stroke-miterlimit="10" d="
+	M128.9,58l-37,64.1L47.1,93.2" />
+
+            </g>
+            <text filter="url(#glow2)" class="loading" x="51%" y="105">0%</text>
+        </svg>
+
+    </div>
+    <script src='https://wow.techbrood.com/uploads/150501/DrawSVGPlugin.js?r=12'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.16.1/TweenMax.min.js'></script>
+    <script src='jindu.js'></script>
+</body>
+
+</html>

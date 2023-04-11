@@ -1,0 +1,72 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>历年出生人口</title>
+     <script src="echarts.js"></script>
+ </head>
+ <body>
+     <div id="container" style="width:1000px;height: 600px;">
+    </div>
+     <script>
+         var dom = document.getElementById("container");
+         var myChart = echarts.init(dom);
+
+         var years = ['2006年','2007年','2008年','2009年','2010年','2011年','2012年','2013年','2014年',
+         '2015年','2016年','2017年','2018年','2019年','2020年'];
+         var data = [1584, 1594,1608,1615,1379,1604,1635,1640,1687,1655,1786,1723,
+        1523,1465,1200];
+
+         var option = {
+             title:{
+                 text:"统计公报历年出生人口",
+                 textStyle:{
+                     fontSize:30,
+                     color:'white'
+                 },
+                 left:'center',
+                 subtext:"注:2010年为六普0岁人口,2020年为七普0岁人口",
+                 subtextStyle:{
+                     color:'white'
+                 }
+             },
+             xAxis:{
+                 type:'category',
+                 data:years,
+                 nameTextStyle:{
+                    color:'white'
+                },
+                axisLabel:{
+                    color:'white'
+                }
+             },
+             yAxis:{
+                 type:'value',
+                 name:"(万人)",
+                 nameTextStyle:{
+                    color:'white'
+                },
+                axisLabel:{
+                    color:'white'
+                }
+             },
+             series:{
+                 type:'bar',
+                 data:data,
+                 label:{
+                     show:true,
+                     position:'top',
+                     color:'white'
+                 },
+                 itemStyle:{
+                    color:'#bdfcc9'
+                }
+             }
+         };
+
+         myChart.setOption(option);
+     </script>
+ </body>
+ </html>

@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head> 
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="echarts.min.js"></script>
+    <link rel="stylesheet" href="page1.css">
+    <link rel="stylesheet" href="iconfont.css">
+    <style>
+        #boxx {
+            overflow: hidden;
+            position: absolute;
+            border-radius: 5px 5px 5px 5px;
+            border: 5px solid rgb(255, 255, 255);
+            background-image: url('beibei1.png');
+            width: 1000px;
+            height: 550px;
+            margin: 50px auto;
+            left: 220px;
+        }
+    </style>
+    <style>
+        @-webkit-keyframes blink {
+
+            from,
+            to {
+                color: transparent;
+            }
+
+            50% {
+                color: black;
+            }
+        }
+
+        @keyframes blink {
+
+            from,
+            to {
+                color: transparent;
+            }
+
+            50% {
+                color: black;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        #container {
+            min-height: 90vh;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: center;
+            -webkit-justify-content: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+
+        #teletype {
+            font-family: monospace;
+            font-size: 2rem;
+            display: block;
+            width: 33rem;
+        }
+
+        #teletype span {
+            -webkit-animation: blink 1s step-end infinite;
+            animation: blink 1s step-end infinite;
+        }
+
+        form {
+            background: #333;
+            padding: 1rem;
+            text-align: center;
+            font-size: 1.2rem;
+            -webkit-transition: 1s;
+            transition: 1s;
+        }
+
+        #typer {
+            padding: .4rem;
+            font-size: inherit;
+            width: 36rem;
+        }
+
+        input[type="submit"] {
+            font-size: inherit;
+            display: inline-block;
+            padding: .3rem;
+        }
+
+        .hideaway {
+            -webkit-transform: translateY(5vw);
+            transform: translateY(5vw);
+        }
+    </style>
+
+</head>
+
+<body background="beijing.png">
+
+    <!-- <script type="text/javascript" src="https://wow.techbrood.com/libs/jquery/jquery-2.1.1.min.js"></script>
+    <script src="https://wow.techbrood.com/libs/jquery/jquery-1.11.1.min.js"></script>
+    <div id="container">
+        <span id="teletype" hidden></span>
+    </div>
+    <form class="hideaway">
+        <input type="text" id="typer" value="Somewhere in the South Pacific">
+        <input type="submit" value="Type It!">
+    </form>
+    <script>
+        const teletype = document.getElementById("teletype"),
+            typer = document.getElementById("typer"),
+            formEntry = document.getElementsByTagName("form")[0],
+            cursor = "<span>|</span>";
+
+        formEntry.addEventListener("submit", function (e) {
+            e.preventDefault();
+            typeIt();
+        });
+
+        function typeIt() {
+            let counter = 0,
+                typedLen = typer.value.length;
+            teletype.innerHTML = cursor;
+            teletype.removeAttribute("hidden");
+            var i = setInterval(function () {
+                teletype.innerHTML = typer.value.substr(0, counter) + cursor;
+                counter++;
+                if (counter === typedLen + 1) {
+                    formEntry.classList.toggle("hideaway");
+                    clearInterval(i);
+                }
+            }, 100);
+        }
+
+        typeIt();
+    </script> -->
+    <!-- <style type="text/css" media="screen">
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        #wrap {
+            position: relative;
+            left: 50%;
+            top: 50%;
+            /*text-align: center;*/
+        }
+
+        #wrap .tag {
+            display: inline-block;
+            position: absolute;
+            /*width: 50px;*/
+            height: 50px;
+            line-height: 50px;
+            font-size: 20px;
+            text-decoration: none;
+            /*left: 10px;*/
+        }
+    </style>
+    <div id="wrap">
+        <a href="#" class="tag">前端学习</a>
+        <a href="#" class="tag">javascript</a>
+        <a href="#" class="tag">css</a>
+        <a href="#" class="tag">html</a>
+        <a href="#" class="tag">jquery</a>
+        <a href="#" class="tag">设计模式</a>
+        <a href="#" class="tag">算法与数据结构</a>
+        <a href="#" class="tag">nodejs</a>
+        <a href="#" class="tag">tcp/ip详解</a>
+        <a href="#" class="tag">http</a>
+        <a href="#" class="tag">计算机网络</a>
+        <a href="#" class="tag">程序员面试宝典</a>
+        <a href="#" class="tag">剑指Offer</a>
+        <a href="#" class="tag">你不知道的javascript</a>
+        <a href="#" class="tag">java</a>
+        <a href="#" class="tag">java核心技术</a>
+        <a href="#" class="tag">nodejs实战</a>
+        <a href="#" class="tag">jquery</a>
+        <a href="#" class="tag">vue</a>
+        <a href="#" class="tag">移动端开发</a>
+        <a href="#" class="tag">HTML5</a>
+        <a href="#" class="tag">nodejs实战</a>
+        <a href="#" class="tag">nodejs实战</a>
+    </div>
+    <script type="text/javascript" src="ciyun.js"></script> -->
+
+    <span style="position:absolute; background-image: url('tiaotiao.png'); width:60px; height:3px; margin-top: 40px; margin-left: 1105px;"></span>
+    <div class="nav_box" style="font-family:myFont">
+        <div :class="[isActive>=1?'in in_on':'in in_off']" @click="turn_1" style="padding-left:12px; z-index: 303;">老年人口情况
+        </div>
+        <div :class="[isActive>=2?'in in_on':'in in_off']" @click="turn_2" style="padding-left:30px; z-index: 302;">分析库
+            <div :class="[isActive>=1?'in_cot in_on':'in_cot in_off']"></div>
+        </div>
+        <div :class="[isActive>=3?'in in_on':'in in_off']" @click="turn_3" style="padding-left:40px;z-index: 300;">时空动态对比
+            <div :class="[isActive>=2?'in_cot in_on':'in_cot in_off']"></div>
+        </div>
+        <div :class="[isActive>=4?'in in_on':'in in_off']" @click="turn_4" style="padding-left:30px;">人口大事纪
+            <div :class="[isActive>=3?'in_cot in_on':'in_cot in_off']"></div>
+        </div>
+        <div :class="[isActive>=5?'in in_on':'in in_off']" @click="turn_5" style="padding-left:30px;">应对措施
+            <div :class="[isActive>=4?'in_cot in_on':'in_cot in_off']"></div>
+        </div>
+        <div :class="[isActive>=6?'in in_on':'in in_off']" @click="turn_6" style="padding-left:18px;">舆情舆论
+            <div :class="[isActive>=5?'in_cot in_on':'in_cot in_off']"></div>
+        </div>
+    </div>
+    <div id="boxx">
+        <span style="float:right; width:500px; height:530px; background-image: url('kuangkuang.png')" v-show=isShow1>
+            <div style="width:280px; height:300px; margin-top:100px; margin-left: 110px;">
+                <p style="margin-left: 10px;">日本前首相福田康夫:</p>
+                <p id="data-id1">
+                </p>
+            </div>
+        </span>
+
+        <span style="float:right; width:500px; height:550px; background-image: url('文本框1.png')" v-show=isShow2>
+            <div style="width:300px; height:300px; margin-top:150px; margin-left: 110px;">
+                <p style="margin-left: 10px;">韩国韩华生命保险有限公司代表蔡华程:</p>
+                <p id="data-id2">
+                </p>
+            </div>
+        </span>
+
+        <span style="float:right; width:500px; height:550px; background-image: url('文本框2.png')" v-show=isShow3>
+            <div style="width:300px; height:300px; margin-top:150px; margin-left: 110px;">
+                <p style="margin-left: 10px;">世界卫生组织荣誉总干事陈冯富珍:</p>
+                <p id="data-id3">
+                </p>
+            </div>
+        </span>
+
+        <span style="float:right; width:500px; height:530px; background-image: url('kuangkuang.png')" v-show=isShow4>
+            <div style="width:300px; height:300px; margin-top:100px; margin-left: 90px;">
+                <p style="margin-left: 0px;">国家卫生和计划生育委员会副主任孙志刚:</p>
+                <p id="data-id4">
+                </p>
+            </div>
+        </span>
+
+        <span style="float:right; width:500px; height:550px; background-image: url('文本框1.png')" v-show=isShow5>
+            <div style="width:300px; height:300px; margin-top:150px; margin-left: 90px;">
+                <p style="margin-left: 10px;">国家发改委社会发展司副巡视员郝福庆：</p>
+                <p id="data-id5">
+                </p>
+            </div>
+        </span>
+
+        <span style="float:right; width:500px; height:550px; background-image: url('文本框2.png')" v-show=isShow6>
+            <div style="width:300px; height:300px; margin-top:150px; margin-left: 110px;">
+                <p style="margin-left: 10px;">老龄社会30人论坛发起人梁春晓:</p>
+                <p id="data-id6">
+                </p>
+            </div>
+        </span>
+        <div id="tagbox">
+            <a @click="set1" target="_blank">福田康夫</a>
+            <a @click="set2" target="_blank">蔡华程</a>
+            <a @click="set3" target="_blank">陈冯富珍</a>
+            <a @click="set4" target="_blank">孙志刚</a>
+            <a @click="set5" target="_blank">郝福庆</a>
+            <a @click="set6" target="_blank">梁春晓</a>
+            <a @click="set1" target="_blank">福田康夫</a>
+            <a @click="set2" target="_blank">蔡华程</a>
+            <a @click="set3" target="_blank">陈冯富珍</a>
+            <a @click="set4" target="_blank">孙志刚</a>
+            <a @click="set5" target="_blank">郝福庆</a>
+            <a @click="set6" target="_blank">梁春晓</a>
+            <a @click="set1" target="_blank">福田康夫</a>
+            <a @click="set2" target="_blank">蔡华程</a>
+            <a @click="set3" target="_blank">陈冯富珍</a>
+            <a @click="set4" target="_blank">孙志刚</a>
+            <a @click="set5" target="_blank">郝福庆</a>
+            <a @click="set6" target="_blank">梁春晓</a>
+            <a @click="set1" target="_blank">福田康夫</a>
+            <a @click="set2" target="_blank">蔡华程</a>
+            <a @click="set3" target="_blank">陈冯富珍</a>
+            <a @click="set4" target="_blank">孙志刚</a>
+            <a @click="set5" target="_blank">郝福庆</a>
+            <a @click="set6" target="_blank">梁春晓</a>
+        </div>
+        <div style="width:500px; height:500px; background-image: url('文本框.png')"></div>
+    </div>
+
+
+    <script type="text/javascript" src="ballciyun.js"></script>
+    <style type="text/css">
+        #tagbox {
+            /* position: relative;
+            margin: 20px auto 0px; */
+            margin-top: 10px;
+            margin-left: 10px;
+            width: 500px;
+            height: 500px;
+            /* font-size: 100px; */
+            /* background: #000304; */
+        }
+
+        #tagbox a {
+            position: absolute;
+            padding: 3px 6px;
+            font-family: Microsoft YaHei;
+            /* color: #fff; */
+            TOP: 0px;
+            font-weight: bold;
+            text-decoration: none;
+            /* font-size: 40px; */
+            left: 0px
+        }
+
+
+        #tagbox a:hover {
+            border: #eee 1px solid;
+            /* background: #000; */
+        }
+
+        #tagbox .blue {
+            color: blue
+        }
+
+        #tagbox .red {
+            color: red
+        }
+
+        #tagbox .yellow {
+            color: yellow
+        }
+    </style>
+
+</html>
+
+
+</div>
+
+<script>
+    var app = new Vue({
+        el: ".nav_box",
+        data: {
+            isActive: 6
+        },
+        methods: {
+                turn_1: function () {
+                    window.location.href = "page1.html"
+                },
+                turn_2: function () {
+                    window.location.href = "page2.html"
+                },
+                turn_4: function () {
+                    window.location.href = "page3.html"
+                },
+                turn_5: function () {
+                    window.location.href = "page4.html"
+                },
+                turn_6: function () {
+                    window.location.href = "page5.html"
+                },
+                turn_3: function () {
+                    window.location.href = "./src/index.html"
+                }
+            },
+    })
+
+    var app1 = new Vue({
+        el: "#boxx",
+        data: {
+            isShow1: false,
+            isShow2: false,
+            isShow3: false,
+            isShow4: false,
+            isShow5: false,
+            isShow6: false,
+            textData:[
+                '一般来说，出生率下降会使得生产者和消费者规模大大减少，给经济造成严重影响。阻止出生率下降是我们现今的首要任务，我们必须创造一个年轻人可以放心生孩子的环境，保证国家的未来。除此之外，我们还需要利用一些新的技术，来弥补经济活动和适龄人口的不足。',
+                '韩国政府主要是采取提供更好的福利，来鼓励年轻夫妇生育，鼓励他们多生育子女，提供的补贴比之前大幅提高。第二，韩国应对老龄化的方式和中国类似，也会推迟退休年龄，让人们在更高的年龄继续工作，进一步减轻社会的负担，我觉得这方面的经验可以和中国共享。',
+                '多层级体系是符合社会长远利益的，是保障医疗体系科学化、高效化、可持续化的必要手段。同样的道理，建立多层次的养老保障体系也是促进养老保障可持续发展必定要走的路。我希望能够通过发挥政府、社会、企业、市场、个人的共同作用，建立一个能够满足群众需求的多元化、多层级的健康保障体系。',
+                '我国的人口老龄化不仅给家庭和社会稳定、社会保障带来巨大影响，也给卫生服务体系建设、卫生资源配置、服务模式转变以及体制、机制改革等带来了前所未有的挑战。“特别是已患多种慢性疾病的老年人，活动能力和自理能力下降，需要更好的医疗关怀和更好的精神慰藉，这给医疗保障体系提出了更高要求。',
+                '这个影响不全部是负面的，也有正面的。老年群体将来会形成一种特殊的消费需求，比如生活照料、健康康复、文化旅游等。我们曾经有一个测算，到2020年，生活照料护理方面的消费应该是一个上万亿元的市场。这个市场的就业岗位可能在一千万个以上，这实际上对我国产业结构升级也是有好处的。',                
+                '无论从中国年轻人的生育愿望，还是从国际情况来看，通过刺激生育来扭转老龄化的趋势，非常困难。在中国，这个问题也同样如此，不是生不生二胎的问题，问题是一胎都不生，连婚都不结。这在日本有一个概念叫低欲望社会。从国际上的经验来看，整个老龄化的趋势，很可能是不可逆转的。',
+            ]
+        },
+        methods: {
+            typeIt(index) {
+                let teletype=document.getElementById('data-id'+index);
+                teletype.innerHTML='';
+                cursor='<span>|</span>'
+                let counter = 0,
+                    typedLen = this.textData[index-1].length;
+                teletype.innerHTML = cursor;
+                teletype.removeAttribute("hidden");
+                var i = setInterval(()=> {
+                    teletype.innerHTML = this.textData[index].substr(0, counter) + cursor;
+                    counter++;
+                    if(counter==typedLen+1){
+                        clearInterval(i)
+                    }
+                }, 60);
+            },
+            set1: function () {
+                this.isShow1 = true;
+                this.isShow2 = false;
+                this.isShow3 = false;
+                this.isShow4 = false;
+                this.isShow5 = false;
+                this.isShow6 = false;
+                this.typeIt(1);
+                clearInterval(i);
+
+            },
+            set2: function () {
+                this.isShow2 = true;
+                this.isShow1 = false;
+                this.isShow3 = false;
+                this.isShow4 = false;
+                this.isShow5 = false;
+                this.isShow6 = false;
+                this.typeIt(2);
+            },
+            set3: function () {
+                this.isShow3 = true;
+                this.isShow1 = false;
+                this.isShow2 = false;
+                this.isShow4 = false;
+                this.isShow5 = false;
+                this.isShow6 = false;
+                this.typeIt(3);
+            },
+            set4: function() {
+                this.isShow3 = false;
+                this.isShow1 = false;
+                this.isShow2 = false;
+                this.isShow4 = true;
+                this.isShow5 = false;
+                this.isShow6 = false;
+                this.typeIt(4);
+            },
+            set5: function() {
+                this.isShow3 = false;
+                this.isShow1 = false;
+                this.isShow2 = false;
+                this.isShow4 = false;
+                this.isShow5 = true;
+                this.isShow6 = false;
+                this.typeIt(5);
+            },
+            set6: function() {
+                this.isShow3 = false;
+                this.isShow1 = false;
+                this.isShow2 = false;
+                this.isShow4 = false;
+                this.isShow5 = false;
+                this.isShow6 = true;
+                this.typeIt(6);
+            }
+        }
+    })
+</script>
+
+</body>
+
+</html>

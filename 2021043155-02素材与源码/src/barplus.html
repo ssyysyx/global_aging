@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2020年各省人口结构</title>
+    <script src="jquery-1.12.4.js"></script>
+    <script src="echarts.js"></script>
+</head>
+<body>
+    <div id="container" style="width:1000px;height: 1000px;"></div>
+
+    <script>
+        var dom = document.getElementById("container");
+        var myChart = new echarts.init(dom);
+
+        var provinces = ['辽宁','上海','黑龙江','吉林','重庆','江苏','四川','天津','山东','湖北','湖南','河北',
+    '内蒙古','北京','陕西','山西','安徽','全国','浙江','河南','甘肃','江西','广西','福建','贵州','云南','海南',
+    '宁夏','广东','青海','新疆','西藏'];
+
+        var data1 = [11.1,9.8,10.3,11.7,15.9,15.2,16.1,13.5,18.8,16.3,19.5,20.2,14.0,11.8,17.3,
+    16.4,19.2,18.0,13.5,23.1,19.4,22.0,23.6,19.3,24.0,19.6,20.0,20.4,18.9,20.8,22.5,24.5];
+        var data2 = [63.2,66.8,66.5,65.2,62.2,63.0,62.2,64.9,60.3,63.3,60.6,59.9,66.2,68.5,63.5,
+    64.7,62.0,63.4,67.9,58.8,63.6,61.2,59.7,64.7,60.7,65.5,65.4,66.1,68.8,67.0,66.3,67.0];
+        var data3 = [25.7,23.4,23.2,23.1,21.9,21.8,21.7,21.7,20.9,20.4,19.9,19.9,19.8,19.6,19.2,18.9,
+    18.8,18.7,18.7,18.1,17.0,16.9,16.7,16.0,15.4,14.9,14.7,13.5,12.4,12.1,11.3,8.5];
+
+        option = {
+            title:{
+                text:'2020年各省人口年龄构成',
+                left:'center',
+                textStyle:{
+                    fontSize:30,
+                    color:'white'
+                }
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // Use axis to trigger tooltip
+                    type: 'shadow'        // 'shadow' as default; can also be 'line' or 'shadow'
+                },
+            },
+            legend: {
+                data: ['0--14岁','15--59岁','60岁及以上'],
+                left:'right',
+                top:'30',
+                textStyle:{
+                    color:'white'
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'value'
+            },
+            yAxis: {
+                type: 'category',
+                data: provinces,
+                axisLabel:{
+                    color:'white'
+                },
+            },
+            series: [
+                {
+                    name: '0--14岁',
+                    type: 'bar',
+                    stack: 'total',
+                    label: {
+                        show: true,
+                        formatter:'{c}%',
+                    },
+                    itemStyle:{
+                        color:'#fce6c9'
+                    },
+                    emphasis: {
+                        focus: 'series'
+                    },
+                    data: data1
+                },
+                {
+                    name: '15--59岁',
+                    type: 'bar',
+                    stack: 'total',
+                    label: {
+                        show: true,
+                        formatter:'{c}%',
+                    },
+                    emphasis: {
+                        focus: 'series'
+                    },
+                    itemStyle:{
+                        color:'#c0c0c0',
+                    },
+                    data: data2
+                },
+                {
+                    name: '60岁及以上',
+                    type: 'bar',
+                    stack: 'total',
+                    label: {
+                        show: true,
+                        formatter:'{c}%',
+                    },
+                    itemStyle:{
+                        color:'#ffc0cb'
+                    },
+                    emphasis: {
+                        focus: 'series'
+                    },
+                    data: data3
+                }
+            ]
+        };
+
+        myChart.setOption(option);
+    </script>
+</body>
+</html>

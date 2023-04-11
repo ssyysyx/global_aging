@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" />
+	    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+		<title>中国地图</title>
+	</head>
+	
+	<body class="bg06">
+		<!-- <div id="mapChart" style="width:1000px;height:500px;"></div> -->
+		<div class="wrap" style="position: relative;">
+			<div id="container" style="width:1000[x];height:600px;"></div> 
+		</div>
+
+		<script type="text/javascript" src="jquery-1.12.4.js"></script>
+		<script type="text/javascript" src="echarts.js"></script>
+		<script type="text/javascript" src="china.js"></script>
+		<script>
+			var myChart = echarts.init(document.getElementById("container"));
+			var years = ["1994",'1995','1996','1997','1998','1999','2000','2001','2002','2003','2004',
+			'2005','2006','2007','2008','2009','2010','2011','2012','2013','2014','2015','2016','2017','2018','2019','2020'];
+
+			var regions = ['北京','天津','河北','山西','内蒙古','辽宁','吉林','黑龙江','上海','江苏','浙江','安徽','福建','江西','山东','河南',
+			'湖北','湖南','广东','广西','海南','重庆','四川','贵州','云南','西藏','陕西','甘肃','青海','宁夏','新疆'];
+
+            let regionData = [
+                {"name": "甘肃", "value": 0},
+                {"name": "青海", "value": 0},
+                {"name": "宁夏", "value": 0},
+                {"name": "新疆", "value": 0},
+                {"name": "四川", "value": 0},
+                {"name": "内蒙古", "value": 0},
+                {"name": "西藏", "value": 0},
+                {"name": "陕西", "value": 0},
+                {"name": "重庆", "value": 0},
+                {"name": "山西", "value": 0},
+
+                {"name": "广西", "value": 20},
+                {"name": "湖南", "value": 20},
+                {"name": "湖北", "value": 20},
+                {"name": "河南", "value": 20},
+                {"name": "江西", "value": 20},
+                {"name": "贵州", "value": 20},
+                {"name": "云南", "value": 20},
+                {"name": "安徽", "value": 20},
+                
+                
+                {"name": "河北", "value": 50},
+                {"name": "辽宁", "value": 50},
+                {"name": "吉林", "value": 50},
+                {"name": "黑龙江", "value": 50},
+                {"name": "福建", "value": 50},
+                {"name": "广东", "value": 50},
+                {"name": "上海", "value": 50},
+                {"name": "江苏", "value": 50},
+                {"name": "浙江", "value": 50},
+                
+                {"name": "北京", "value": 50},
+                {"name": "天津", "value": 50},
+                {"name": "山东", "value": 50},
+                {"name": "海南", "value": 50},
+                {"name": "台湾", "value": 50}
+            ];
+			
+            $.when(
+				$.getJSON("dataForMap.json")
+			).done(function(res){
+				data = res;
+
+				// 各省坐标
+				var geoCoordMap = {
+					"台湾":[121.509062,25.044332],
+					"河北":[114.502461,39.045474],
+					"山西":[112.549248,37.857014],		
+					"辽宁":[123.429096,41.796767],
+					"吉林":[125.3245,44.886841],
+					"黑龙江":[126.642464,48.756967],
+					"江苏":[120.767413,33.041544],
+					"浙江":[120.153576,30.287459],
+					"福建":[118.306239,26.075302],
+					"山东":[117.000923,36.675807],
+
+                    // "安徽":[117.283042,31.86119],
+					// "河南":[113.665412,34.757975],
+					// "湖北":[112.298572,31.584355],
+					// "湖南":[112.982279,28.19409],
+                    // "贵州":[106.713478,27.578343],
+					// "云南":[102.712251,25.040609],
+                    // "广西":[108.320004,23.82402],
+                    // "江西":[115.892151,28.676493],
+					
+                    "广东":[113.280637,24.125178],
+					"海南":[110.33119,20.031971],
+					"四川":[104.065735,30.659462],
+					"陕西":[108.948024,34.263161],
+					"甘肃":[103.823557,36.058039],
+					"青海":[99.778916,36.623178],
+					"西藏":[91.132212,31.660361],
+					"内蒙古":[111.670801,42.818311],
+					"宁夏":[106.278179,38.46637],
+					"新疆":[87.617733,43.792818],
+					"北京":[116.405285,41.904989],
+					"天津":[117.190182,40.125596],
+					"上海":[123.472644,31.731706],
+					"重庆":[107.504962,30.533155],
+					"香港":[114.173355,22.320048],
+					"澳门":[113.54909,22.198951]
+				};
+
+                var index = 26;
+				var rawData = data.filter(function(d){
+					return d.year == years[index];
+				});
+
+                var datasets = {
+                    dimensions:[{name:'provinceName'},{name:'populationRate'}],
+                    source:[],
+                };
+
+                for(var i = 0; i < rawData.length; i++){
+                    datasets.source.push(rawData[i]);
+                }
+
+				console.log(rawData);
+
+				option = {
+                    z:100,
+                    title: {
+                        text: '2020年中国沿海-中西部地区老龄化与经济对比',
+                        textStyle:{
+                            fontSize:30,
+							color:'white'
+                        },
+                        left:'center',
+                        top:10
+                    },
+					animation: false,
+                    toolbox: {
+                        show: true,
+                        orient: 'vertical',
+                        left: 'right',
+                        top: 'center',
+                        feature: {
+                            dataView: {readOnly: false},
+                            restore: {},
+                            saveAsImage: {}
+                        }
+                    },
+                    visualMap: {
+                        min: 0,
+                        max: 50,
+                        text: ['High', 'Low'],
+                        realtime: false,
+                        calculable: true,
+                        inRange: {
+                            color: ['yellow', 'lightskyblue', 'red']
+                        },
+						left:200,
+						bottom:40
+                    },
+					geo:{
+                        map:'china',
+                        emphasis:{
+                            label:false,
+                        }
+                    },
+                    series:[{
+                        name: '中国各省人口老龄化对比',
+                        type: 'map',
+                        map:'china', // 自定义扩展图表类型
+                        data:regionData,
+                        label: {
+                            show: false
+                        },
+                    }],
+				};
+
+				// 绘制每个省份的柱状图
+				function renderEachProvince(){
+					var option = {
+						dataset:[],
+						xAxis:[],
+						yAxis:[],
+						grid:[],
+						series:[]
+					};
+					
+					echarts.util.each(rawData, function(dataItem, idx){
+						// 地理坐标转换为像素坐标
+						var geoCoord = geoCoordMap[dataItem.provinceName];
+                        if(typeof(geoCoord) == 'undefined'){
+                            return;
+                        }
+						var coord = myChart.convertToPixel('geo', geoCoord);
+
+						idx += "";
+						var temp = {value:dataItem.populationRate, visualMap:false};
+						var temp1 = {value:dataItem.gdpRate, visualMap:false};
+						var inflationData = [];
+						inflationData.push(temp);
+						inflationData.push(temp1);
+						// var inflationData = [dataItem.populationRate, dataItem.gdpRate];
+						// console.log(inflationData);
+						option.xAxis.push({
+							id:idx,
+							gridId: idx,
+							type:'category',
+							name:dataItem.provinceName,
+							nameLocation:'middle',
+							nameGap:2,
+							nameTextStyle:{
+								fontSize:16,
+							},
+							splitLine: {
+								show: false
+							},
+							axisTick: {
+								show: false
+							},
+							axisLabel: {
+								show: false
+							},
+							axisLine: {
+								onZero: false,
+								lineStyle: {
+									color: '#000'
+								}
+							},
+							data:["人口老龄化占比","全国GDP占比"],
+							z:100
+						});
+
+						option.yAxis.push({
+							id:idx,
+							gridId:idx,
+							z:100,
+							splitLine: {
+								show: false
+							},
+							axisTick: {
+								show: false
+							},
+							axisLabel: {
+								show: false,
+							},
+							axisLine: {
+								show: false,
+								lineStyle: {
+									color: '#1C70B6'
+								}
+							},
+						});
+
+						option.grid.push({
+							id: idx,
+							width:30,
+							height:40,
+							left:coord[0] - 15,
+							top:coord[1] - 15,
+							z:100
+						});
+
+						option.series.push({
+							id: idx,
+							type:'bar',
+							xAxisId: idx,
+							yAxisId: idx,
+							barGap: 0,
+							barCateGoryGap:0,
+							data: inflationData,
+							z: 100,
+							itemStyle: {
+								color: function(params){
+									// 柱状图每根柱子颜色
+									var colorList = ['#55CEFA','#59ED4F'];
+									return colorList[params.dataIndex];
+								},
+							}
+						});
+					});
+
+					myChart.setOption(option);
+				}
+				setTimeout(renderEachProvince, 0);
+
+				// 拖拽或者缩放
+				function throttle(fn, delay, debounce){
+					var currCall;
+					var lastCall = 0;
+					var lastExec = 0;
+					var timer = null;
+					var diff;
+					var scope;
+					var args;
+
+					delay = delay || 0;
+
+					function exec() {
+						lastExec = (new Date()).getTime();
+						timer = null;
+						fn.apply(scope, args || []);
+					}
+
+					var cb = function() {
+						currCall = (new Date()).getTime();
+						scope = this;
+						args = arguments;
+						diff = currCall - (debounce ? lastCall : lastExec) - delay;
+
+						clearTimeout(timer);
+
+						if (debounce) {
+							timer = setTimeout(exec, delay);
+						} else {
+							if (diff >= 0) {
+								exec();
+							} else {
+								timer = setTimeout(exec, -diff);
+							}
+						}
+
+						lastCall = currCall;
+					};
+
+					return cb;
+				}
+
+				var throttledRenderEachProvince = throttle(renderEachProvince, 0);
+				myChart.on('geoRoam', throttledRenderEachProvince);
+				myChart.setOption(option);
+
+
+				myChart.on('click',function(e){
+					// console.log(params);
+                    console.log(e);
+					if(e.componentSubType == "bar"){
+						// 先清除所有柱状图
+						$('.tongJiTu').remove();
+						// 创建遮挡层
+						creatWrap();
+						// 创建柱状图容器
+						var divObj = document.createElement('div');
+						$(divObj).addClass('tongJiTu');
+						divObj.id = 'zhuzhuang';
+						var divX = getMousePos()['x']; 
+						var divY = getMousePos()['y']; 
+						$(divObj).css({
+							'width': 250,
+							'height': 180,
+							'border': '1px solid #000',
+							'position': 'absolute',
+							'top': divY,
+							'left': divX
+						}).appendTo('.wrap');
+						// 创建柱状图
+						zhuZhuangTu(e);
+						// 点击遮挡层消失
+						clearWrap('.zhedang');
+        			}
+        			return;
+    			});
+
+				// 获取横纵坐标
+				function getMousePos(e) {
+					var e = event || window.event;
+					var scrollX = document.documentElement.scrollLeft || document.body.scrollLeft;
+					var scrollY = document.documentElement.scrollTop || document.body.scrollTop;
+					var x = e.pageX || e.clientX + scrollX;
+					var y = e.pageY || e.clientY + scrollY;
+					// console.log(x,y)
+					return {'x': x,'y': y};
+				}
+
+				// 生成放大的柱状图
+				function zhuZhuangTu(e) {
+					var zhuzhuang = echarts.init(document.getElementById('zhuzhuang'));
+					option = {
+						backgroundColor: 'rgba(255,255,255,.3)',
+						legend:{
+
+						},
+						xAxis: [
+							{
+								type: 'category',
+								data: [{
+									value:'老年人口占比',
+									textStyle:{
+										color:'#000',
+										fontSize:13
+									}
+								},{
+									value:'GDP占比',
+									textStyle:{
+										color:'#000',
+										fontSize:13
+									}
+								}],
+							}
+						],
+						yAxis: [
+							{
+								splitLine: {
+									show: false
+								},
+								type: 'value'
+							}
+						],
+						series: [
+							{
+								type: 'bar',
+								itemStyle: {
+									color: function(params){
+										var colorList = ['#55CEFA','#59ED4F'];
+										return colorList[params.dataIndex];
+									}
+								},
+								label: {
+									show: true,
+									position: 'top',
+									textStyle: {
+										color: '#000'
+									}
+								},
+                                data:[],
+							}
+						]
+					};
+
+                    for(var t = 0; t < rawData.length; t++){
+                        if(t == e.seriesId){
+                            option.series[0].data.push(rawData[t].populationRate);
+                            option.series[0].data.push(rawData[t].gdpRate);
+                        }
+                    }
+					zhuzhuang.setOption(option);
+				}
+
+				// 生成遮挡层
+				function creatWrap(){
+					var zheDang = document.createElement('div');
+					$(zheDang).addClass('zhedang').css({
+						width: '100%',
+						height: '100%',
+						position: 'absolute',
+						top: 0,
+						left: 0,
+						backgroundColor: 'rgba(0,0,0,.2)'
+					}).appendTo('.wrap');
+				}
+				// 去掉遮挡层
+				function clearWrap(id){
+					$(id).click(function(e){
+						// console.log(this);
+						this.remove();
+						$('.tongJiTu').remove();
+						return false;
+					});
+    			}
+			});
+		</script>
+	</body>
+</html>

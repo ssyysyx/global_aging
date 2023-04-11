@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="echarts.js"></script>
+</head>
+<body>
+    <div id="container" style="width:1000px;height:600px;"></div>
+    <script>
+        var dom = document.getElementById("container");
+        var myChart = echarts.init(dom);
+
+        var years = ['1959年','1964年','1982年','1990年','2000年','2010年','2020年'];
+        var data1 = [65495,69836,100863,113518,126264,133281,141177];
+        var data2 = [1.83,2.32,1.47,1.47,0.79,0.48,0.53];
+        option = {
+            title:{
+                text:'历年中国人口总数变化',
+                left:'center',
+                top:'0',
+                textStyle:{
+                    fontSize:30,
+                    color:'white'
+                }
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    crossStyle: {
+                        color: '#999'
+                    }
+                }
+            },
+            toolbox: {
+                feature: {
+                    dataView: {show: true, readOnly: false},
+                    magicType: {show: true, type: ['line', 'bar']},
+                    restore: {show: true},
+                    saveAsImage: {show: true}
+                },
+                right:'20%',
+            },
+            legend: {
+                data: ['全国人口', '年均增长率'],
+                right:'130',
+                top:'15',
+                textStyle:{
+                    color:'white'
+                }
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data:years,
+                    axisPointer: {
+                        type: 'shadow'
+                    },
+                    nameTextStyle:{
+                        color:'white'
+                    },
+                    axisLabel:{
+                        color:'white'
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    name: '全国人口(万人)',
+                    axisLabel: {
+                        formatter: '{value} '
+                    },
+                    nameTextStyle:{
+                        color:'white'
+                    },
+                    axisLabel:{
+                        color:'white'
+                    }
+                },
+                {
+                    type: 'value',
+                    name: '年均增长率(%)',
+                    axisLabel: {
+                        formatter: '{value} '
+                    },
+                    nameTextStyle:{
+                        color:'white'
+                    },
+                    axisLabel:{
+                        color:'white'
+                    }
+                }
+            ],
+            series: [
+                {
+                    name: '全国人口',
+                    type: 'bar',
+                    data: data1,
+                    itemStyle:{
+                        color:'#f4a460'
+                    }
+                },
+                {
+                    name: '年均增长率',
+                    type: 'line',
+                    yAxisIndex:1,
+                    data: data2,
+                    itemStyle:{
+                        color:'#faebd7'
+                    }
+                }
+            ]
+        };
+
+        myChart.setOption(option);
+    </script>
+</body>
+</html>

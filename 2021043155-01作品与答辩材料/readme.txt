@@ -1,1 +1,1 @@
-部署链接：hhttps://www.shenyanxin.top/loading.html
+部署链接：https://www.shenyanxin.top/loading.html
